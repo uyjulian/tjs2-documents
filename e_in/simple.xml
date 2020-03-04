@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doc>
+<title>Basic usage</title>
+
+<para>
+<ptitle>compile</ptitle>
+　You can compile with Borland C++ 5.5 or later (C++ Builder 5 or later).<r/>
+<r/>
+　Compilation requires regex++ from boost.org.<r/>
+<r/>
+　After installing regex++, compile each cpp file.<r/>
+<r/>
+　In the case of C++ Builder, it is OK just to add to all projects each cpp file of tjs2.<r/>
+<r/>
+　You can compile even gcc 3 or later (you can compile even 2.95 but must be related fixes wstring).<r/>
+</para>
+
+<para>
+<ptitle>A simple example</ptitle>
+<r/>
+<example><lc/>
+<l/>#include &lt;stdio.h><r/>
+<l/>#include "tjs.h"<r/>
+<l/>#include "tjsError.h"<r/>
+<l/><r/>
+<l/>int main(int argc, char* argv[])<r/>
+<l/>{<r/>
+<l/>	setlocale(LC_ALL, ""); // Setting the locale<r/>
+<l/><r/>
+<l/>	tTJS *tjsengine = new tTJS(); // Create TJS2 script engine<r/>
+<l/><r/>
+<l/>	try<r/>
+<l/>	{<r/>
+<l/>		tTJSVariant result; // Variable to receive the result<r/>
+<l/><r/>
+<l/>		tjsengine->ExecScript(<r/>
+<l/>			TJS_W(<r/>
+<l/>				"function test(x, y) { return x*y; } \n"<r/>
+<l/>				"return test(4, 5);\n"),<r/>
+<l/>				&amp;result, NULL,<r/>
+<l/>				TJS_W("test code"));	// Run the test script<r/>
+<l/><r/>
+<l/>		printf("Result: %d\n", (int)result); // Show results<r/>
+<l/>	}<r/>
+<l/>	catch(eTJSError &amp;e)<r/>
+<l/>	{<r/>
+<l/>		printf("An error has occurred: %ls\n", e.GetMessage().c_str());<r/>
+<l/>	}<r/>
+<l/>	catch(...)<r/>
+<l/>	{<r/>
+<l/>		printf("An error has occurred\n");<r/>
+<l/>	}<r/>
+<l/><r/>
+<l/>	tjsengine->Shutdown(); // Shut down TJS2 script engine<r/>
+<l/>	tjsengine->Release(); // Release TJS2 script engine<r/>
+<l/><r/>
+<l/>	return 0;<r/>
+<l/>}<r/>
+</example>
+<r/>
+
+<dl>
+
+<dt>Lines 2 through 3</dt>
+<dd>
+　Loading the header files needed to use the TJS2. tjsError.h contains declarations for TJS C++ exceptions.
+</dd>
+
+
+
+<dt>Line 7</dt>
+<dd>
+　The locale is specified by setlocale. If the locale is not specified, the "C" locale will result, and conversion between Japanese narrow and wide characters will not work.
+</dd>
+
+
+
+<dt>Line 9</dt>
+<dd>
+　The TJS2 script engine is created with the new operator.
+</dd>
+
+
+
+<dt>Line 11</dt>
+<dd>
+　It is in a try block. TJS2 errors are signaled by exceptions, so care must be taken in exception handling.
+</dd>
+
+
+
+<dt>Line 13</dt>
+<dd>
+　Declares a tTJSVariant type variable to receive the result of executing the script.
+</dd>
+
+
+
+<dt>Lines 15 through 20</dt>
+<dd>
+　Script is executed using tTJS::ExecScript.<r/>
+　Specify the script to be executed as the first argument. String literals are converted to wide strings using the TJS_W macro to pass in the tjs_char * type. The script defines a function test and returns the result of calling that function.<r/>
+　In this example, the result of the execution is returned by the return statement, and it is received in the result variable. If it is not necessary to receive the result, neither the return statement nor the second argument of tTJS::ExecScript is required (in that case, 2 The second argument is NULL).<r/>
+　The third argument of tTJS::ExecScript is the execution context, but specify NULL here. If NULL is specified, the script will be executed in the global context.<r/>
+　The fourth argument of tTJS::ExecScript specifies the name of this script. If NULL, it is treated as anonymous. The name must be human readable.
+</dd>
+
+
+
+<dt>Line 22</dt>
+<dd>
+　Showing results. Here, tTJSVariant is cast to int type.
+</dd>
+
+
+
+<dt>Line 24</dt>
+<dd>
+　An eTJSError type exception has been received.
+</dd>
+
+
+
+<dt>Line 26</dt>
+<dd>
+　eTJSError::GetMessage is used to display the reason for the exception. We use tTJSString::c_str to convert the message to const tjs_char *. Since tjs_char is a wide character, printf specifies %ls as the conversion specifier.
+</dd>
+
+
+
+<dt>Line 28</dt>
+<dd>
+　I am receiving other exceptions.
+</dd>
+
+
+
+<dt>Lines 33 through 34</dt>
+<dd>
+　Releasing TJS2 script engine. Prior to release, the TJS2 script engine is shut down using tTJS::Shutdown.
+</dd>
+</dl>
+</para>
+
+
+<para>
+<ptitle>Calling TJS2 function</ptitle>
+　In this method, the function declared on the TJS2 side is called from C++.<r/>
+　Let's write in the above try block as follows.<r/>
+<r/>
+<example><lc/>
+<l/>		tTJSVariant result; // Variable to receive the result<r/>
+<l/><r/>
+<l/>		tjsengine->ExecScript(<r/>
+<l/>			TJS_W("function test(x, y) { return x*y; }"), NULL, NULL, TJS_W("test"));<r/>
+<l/><r/>
+<l/>		tjsengine->EvalExpression(TJS_W("test(4, 5)"), &amp;result, NULL, NULL);<r/>
+<l/>			// Execute expression using tTJS::EvalExpression<r/>
+<l/><r/>
+<l/>		printf("Result: %d\n", (int)result); // Show results<r/>
+<l/><r/>
+<l/>		iTJSDispatch2 * global = tjsengine->GetGlobalNoAddRef();<r/>
+<l/>			// Get global object<r/>
+<l/><r/>
+<l/>		tTJSVariant param[] = { 4, 5 }; // Variables passed as parameters<r/>
+<l/>		tTJSVariant *p_param[] = { param + 0, param + 1 }; // Array of pointers to variables<r/>
+<l/><r/>
+<l/>		TJS_THROW_IF_ERROR(global->FuncCall(0, TJS_W("test"), NULL, &amp;result, 2, p_param, NULL));<r/>
+<l/>			// Call test as a function<r/>
+<l/><r/>
+<l/>		printf("Result: %d\n", (int)result); // Show results<r/>
+</example>
+<r/>
+<dl>
+
+<dt>Lines 3 through 4</dt>
+<dd>
+　Declares function test. test is registered to global.
+</dd>
+
+
+
+<dt>Line 6</dt>
+<dd>
+　An expression is executed using tTJS::EvalExpression. If you don't need to be very fast, it's easy to pass the expression as a string and receive the result.<r/>
+　By the way, for simple expressions (such as those that do not include other execution units, such as function declarations), the compilation results are cached to some extent, and the second and subsequent expressions can be evaluated at high speed.
+</dd>
+
+
+
+<dt>Line 11</dt>
+<dd>
+　Getting global object. The difference between tTJS::GetGlobal and tTJS::GetGlobalNoAddRef is that the former increments the reference counter of the global object, while the latter does not.<r/>
+　Incrementing the reference counter and decrementing when you are done with it means locking the object in the meantime so that it does not disappear. If you do not have to worry about the global object disappearing like this example, you do not need to manipulate the reference counter, so you can use tTJS::GetGlobalNoAddRef. In this case, you do not need a Release when you have finished using it.
+</dd>
+
+
+
+<dt>Lines 14 through 15</dt>
+<dd>
+　Preparing parameters to pass to the function. This preparation is necessary because iTJSDispatch :: FuncCall requires an array of tTJSVariant pointers as parameters to be passed to the function.
+</dd>
+
+
+
+<dt>Line 17</dt>
+<dd>
+　Function "test" is called using iTJSDispatch2::FuncCall.<r/>
+　The last argument of FuncCall is this (execution context) passed to the function test, but NULL can be specified because this is not used in the test declared in this example. If there is a context to execute, you must specify that object.<r/>
+　TJS_THROW_IF_ERROR is a macro that raises an exception with the corresponding error message when the result of tjs_error type is an error.
+</dd>
+</dl>
+
+</para>
+
+
+<para>
+<ptitle>Native functions</ptitle>
+　You can create native implementations (functions implemented in C++ etc.) and access them from the TJS2 side.<r/>
+　You can call functions written in any language that can implement iTJSDispatch2 without using C++, but C++ is the easiest.<r/>
+<r/>
+　When writing a function in C++, it is easy to derive a class from tTJSNativeFunction (described in tjsNative.h). (However, it is possible to operate as a function just by implementing FuncCall of iTJSDispatch2.)<r/>
+<r/>
+　Let's implement a simple function that multiplies two given arguments and returns them.<r/>
+<example><lc/>
+<l/>class TestFunc : public tTJSNativeFunction<r/>
+<l/>{<r/>
+<l/>public:<r/>
+<l/>	tjs_error Process(tTJSVariant *result, tjs_int numparams,<r/>
+<l/>		tTJSVariant **param, iTJSDispatch2 *objthis)<r/>
+<l/>	{<r/>
+<l/>		if(numparams &lt; 2) return TJS_E_BADPARAMCOUNT; // Not enough arguments<r/>
+<l/><r/>
+<l/>		if(!result) return TJS_S_OK; // Return if no need to store result<r/>
+<l/><r/>
+<l/>		*result = *param[0] * *param[1]; // Calculation<r/>
+<l/><r/>
+<l/>		return TJS_S_OK; // Returns TJS_S_OK to indicate success<r/>
+<l/>	}<r/>
+<l/>};<r/>
+</example>
+<r/>
+　The only method that should be implemented in a class that inherits tTJSNativeFunction is the Process method as described above.<r/>
+　The arguments of the Process method are as follows.<r/>
+<r/>
+
+<dl>
+
+<dt>tTJSVariant *result</dt>
+<dd>
+　A pointer to a variable of type tTJSVariant for storing the result of the function is passed. Note that <b>NULL is passed if the caller does not need the result</b>.
+</dd>
+
+
+
+<dt>tjs_int numparams</dt>
+<dd>
+　Number of arguments passed to the function.
+</dd>
+
+
+
+<dt>tTJSVariant **param</dt>
+<dd>
+　An array of pointers to tTJSVariant variables that contain the arguments passed to the function.
+</dd>
+
+
+
+<dt>iTJSDispatch2 *objthis</dt>
+<dd>
+　The context in which the function should be executed. If you are implementing a context-independent implementation, you can ignore it.
+</dd>
+</dl>
+<r/>
+<r/>
+<r/>
+　To make a native function accessible from TJS2, it must be registered with an object accessible from within TJS2. In the following example, it is registered as "test" in global. Also, it actually calls that function.<r/>
+<example><lc/>
+<l/>		iTJSDispatch2 * global = tjsengine->GetGlobalNoAddRef();<r/>
+<l/>			// Get global object<r/>
+<l/><r/>
+<l/>		iTJSDispatch2 *func = new TestFunc(); // Create TestFunc object<r/>
+<l/>		tTJSVariant func_var(func); // Set object to tTJSVariant type func_var<r/>
+<l/>		func->Release(); // Release func<r/>
+<l/><r/>
+<l/>		TJS_THROW_IF_ERROR(<r/>
+<l/>			global->PropSet(TJS_MEMBERENSURE, TJS_W("test"), NULL, &amp;func_var, NULL));<r/>
+<l/>				// Register<r/>
+<l/><r/>
+<l/>		tTJSVariant result; // Variable to receive the result<r/>
+<l/>		tjsengine->EvalExpression(TJS_W("test(4, 5)"), &amp;result, NULL, NULL);<r/>
+<l/>			// Execute expression using tTJS::EvalExpression<r/>
+<l/><r/>
+<l/>		printf("Result: %d\n", (int)result); // Show results<r/>
+</example>
+<r/>
+<dl>
+
+<dt>Lines 4 through 6</dt>
+<dd>
+　Creates an object of class TestFunc that implements native functions and converts it to tTJSVariant type.<r/>
+　In line 5, the function is converted to tTJSVariant type. At this point, since the tTJSVariant type automatically manages the reference counter of the function object, the function object is released in line 6.
+</dd>
+
+
+
+<dt>Lines 8 through 9</dt>
+<dd>
+　The function is registered as "test" in the global object. It calls the global object iTJSDispatch2::PropSet with the TJS_MEMBERENSURE flag to create a new member.
+</dd>
+
+
+
+<dt>Lines 12 through 16</dt>
+<dd>
+　Calls the function and displays the result.
+</dd>
+</dl>
+</para>
+
+<para>
+<ptitle>Native class</ptitle>
+　TJS2 has a mechanism for handling native classes written in languages such as C++.<r/>
+　Each object (iTJSDispatch2 interface) can register an object of type iTJSNativeInstance called a native instance, which can be extracted from the object.<r/>
+　Native instances are identified by a unique class ID, and you need to get the class ID when you create a native class.<r/>
+<r/>
+　However, macros for performing these operations are defined in tjsNative.h, so it is easy to use them.<r/>
+　The following example implements a simple class using these macros.<r/>
+<r/>
+　First, the implementation of the native instance. To implement a native instance, derive a class from tTJSNativeInstance. tTJSNativeInstance is a class implemented in tjsNative.cpp / tjsNative.h, and implements the basic operation of iTJSNativeInstance.<r/>
+<r/>
+<example><lc/>
+<l/>class NI_Test : public tTJSNativeInstance // Native instance<r/>
+<l/>{<r/>
+<l/>public:<r/>
+<l/>	NI_Test()<r/>
+<l/>	{<r/>
+<l/>		// constructor<r/>
+<l/>		Value = 0;<r/>
+<l/>	}<r/>
+<l/><r/>
+<l/>	tjs_error TJS_INTF_METHOD<r/>
+<l/>		Construct(tjs_int numparams, tTJSVariant **param, iTJSDispatch2 *tjs_obj)<r/>
+<l/>	{<r/>
+<l/>		// Called when a TJS2 object is created<r/>
+<l/><r/>
+<l/>		// If there is an argument, put it in Value as the initial value<r/>
+<l/>		if(numparams >= 1 &amp;&amp; param[0]->Type() != tvtVoid)<r/>
+<l/>			Value = (tjs_int)*param[0];<r/>
+<l/><r/>
+<l/>		return S_OK;<r/>
+<l/>	}<r/>
+<l/><r/>
+<l/>	void TJS_INTF_METHOD Invalidate()<r/>
+<l/>	{<r/>
+<l/>		// Called when the object is invalidated<r/>
+<l/>	}<r/>
+<l/><r/>
+<l/>	void SetValue(tjs_int n) { Value = n; }<r/>
+<l/>	tjs_int GetValue() const { return Value; }<r/>
+<l/><r/>
+<l/>	tjs_int GetSquare() const { return Value*Value; }<r/>
+<l/>	void Add(tjs_int n) { Value += n; }<r/>
+<l/>	void Print() const { printf("%d\n", Value); }<r/>
+<l/><r/>
+<l/>private:<r/>
+<l/>	tjs_int Value; // Value<r/>
+<l/>};<r/>
+</example>
+<r/>
+<dl>
+
+<dt>Line 35</dt>
+<dd>
+　Before and after, it's a data member. The required data members can be freely written in the native instance.
+</dd>
+
+
+<dt>Lines 4 through 8</dt>
+<dd>
+　Constructor for NI_Test. It is recommended that initialization as a C ++ class be done here rather than Construct described later, and that initialization in Construct be minimized.<r/>
+　In this example, the value of the data member is set to 0 as the initial value.
+</dd>
+
+
+
+<dt>Lines10 through 20</dt>
+<dd>
+　Called when a TJS2 object is created with the new operator. The numparams and param arguments represent the arguments passed to the new operator.<r/>
+　The tjs_obj argument is the TJS object to be created.<r/>
+　In this example, if there is an argument (and it is not void), it sets it as the initial value of Value.
+</dd>
+
+
+
+<dt>Lines 22 through 25</dt>
+<dd>
+　Method called when the object is invalidated. It is good to write the end processing here.<r/>
+　Do nothing in this example.
+</dd>
+
+
+
+<dt>Lines 27 through 32</dt>
+<dd>
+　Public methods for manipulating data members. Write the code that uses these in the native class described later.
+</dd>
+</dl>
+
+<r/>
+　You need a class to create an object, so write the class. The class is implemented by deriving tTJSNativeClass. tTJSNativeClass has the iTJSDispatch2 interface, which implements the basic behavior for acting as a native class.<r/>
+　The methods and properties accessible from TJS are described in the constructor of the native class.<r/>
+<r/>
+<example><lc/>
+<l/>class NC_Test : public tTJSNativeClass // Native class<r/>
+<l/>{<r/>
+<l/>public:<r/>
+<l/>	NC_Test(); // Constructor; described below<r/>
+<l/><r/>
+<l/>	static tjs_uint32 ClassID; // Class ID<r/>
+<l/><r/>
+<l/>private:<r/>
+<l/>	tTJSNativeInstance *CreateNativeInstance()<r/>
+<l/>	{<r/>
+<l/>		return new NI_Test(); // Create and return a native instance<r/>
+<l/>	}<r/>
+<l/>};<r/>
+<l/>tjs_uint32 NC_Test::ClassID = (tjs_uint32)-1; // Class ID<r/>
+</example>
+<r/>
+<dl>
+
+<dt>Line 4</dt>
+<dd>
+　The constructor for this class. The implementation will be described later.
+</dd>
+
+
+
+<dt>Line 6</dt>
+<dd>
+　Variable to hold the class ID of this class. The substance is on line 14.
+</dd>
+
+
+
+<dt>Lines 9 through 12</dt>
+<dd>
+　CreateNativeInstance method is called when the native instance should be created. Here we create and return an object of class NI_Test.
+</dd>
+</dl>
+<r/>
+
+<r/>
+<r/>
+
+<example><lc/>
+<l/>NC_Test::NC_Test() : tTJSNativeClass(TJS_W("Test"))<r/>
+<l/>{<r/>
+<l/>	TJS_BEGIN_NATIVE_MEMBERS(/*TJS class name*/Test)<r/>
+<l/><r/>
+<l/>		TJS_DECL_EMPTY_FINALIZE_METHOD<r/>
+<l/><r/>
+<l/>		TJS_BEGIN_NATIVE_CONSTRUCTOR_DECL(<r/>
+<l/>			/*var.name*/_this,<r/>
+<l/>			/*var.type*/NI_Test,<r/>
+<l/>			/*TJS class name*/Test)<r/>
+<l/>		{<r/>
+<l/>			// Since nothing can be described in NI_Test::Construct, nothing is done here<r/>
+<l/>			return TJS_S_OK;<r/>
+<l/>		}<r/>
+<l/>		TJS_END_NATIVE_CONSTRUCTOR_DECL(/*TJS class name*/Test)<r/>
+<l/><r/>
+<l/>		TJS_BEGIN_NATIVE_METHOD_DECL(/*func. name*/print) // print method<r/>
+<l/>		{<r/>
+<l/>			TJS_GET_NATIVE_INSTANCE(/*var. name*/_this,<r/>
+<l/>				/*var. type*/NI_Test);<r/>
+<l/><r/>
+<l/>			_this->Print();<r/>
+<l/><r/>
+<l/>			return TJS_S_OK;<r/>
+<l/>		}<r/>
+<l/>		TJS_END_NATIVE_METHOD_DECL(/*func. name*/print)<r/>
+<l/><r/>
+<l/>		TJS_BEGIN_NATIVE_METHOD_DECL(/*func. name*/add) // add method<r/>
+<l/>		{<r/>
+<l/>			TJS_GET_NATIVE_INSTANCE(/*var. name*/_this,<r/>
+<l/>				/*var. type*/NI_Test);<r/>
+<l/><r/>
+<l/>			if(numparams &lt; 1) return TJS_E_BADPARAMCOUNT;<r/>
+<l/><r/>
+<l/>			_this->Add((tjs_int)*param[0]);<r/>
+<l/><r/>
+<l/>			return TJS_S_OK;<r/>
+<l/>		}<r/>
+<l/>		TJS_END_NATIVE_METHOD_DECL(/*func. name*/add)<r/>
+<l/><r/>
+<l/>		TJS_BEGIN_NATIVE_PROP_DECL(value) // value property<r/>
+<l/>		{<r/>
+<l/>			TJS_BEGIN_NATIVE_PROP_GETTER<r/>
+<l/>			{<r/>
+<l/>				TJS_GET_NATIVE_INSTANCE(/*var. name*/_this,<r/>
+<l/>					/*var. type*/NI_Test);<r/>
+<l/>				*result = _this->GetValue();<r/>
+<l/>				return TJS_S_OK;<r/>
+<l/>			}<r/>
+<l/>			TJS_END_NATIVE_PROP_GETTER<r/>
+<l/><r/>
+<l/>			TJS_BEGIN_NATIVE_PROP_SETTER<r/>
+<l/>			{<r/>
+<l/>				TJS_GET_NATIVE_INSTANCE(/*var. name*/_this,<r/>
+<l/>					/*var. type*/NI_Test);<r/>
+<l/>				_this->SetValue((tjs_int)*param);<r/>
+<l/>				return TJS_S_OK;<r/>
+<l/>			}<r/>
+<l/>			TJS_END_NATIVE_PROP_SETTER<r/>
+<l/>		}<r/>
+<l/>		TJS_END_NATIVE_PROP_DECL(value)<r/>
+<l/><r/>
+<l/>		TJS_BEGIN_NATIVE_PROP_DECL(square) // square read-only property<r/>
+<l/>		{<r/>
+<l/>			TJS_BEGIN_NATIVE_PROP_GETTER<r/>
+<l/>			{<r/>
+<l/>				TJS_GET_NATIVE_INSTANCE(/*var. name*/_this,<r/>
+<l/>					/*var. type*/NI_Test);<r/>
+<l/><r/>
+<l/>				*result = _this->GetSquare();<r/>
+<l/><r/>
+<l/>				return TJS_S_OK;<r/>
+<l/>			}<r/>
+<l/>			TJS_END_NATIVE_PROP_GETTER<r/>
+<l/><r/>
+<l/>			TJS_DENY_NATIVE_PROP_SETTER<r/>
+<l/>		}<r/>
+<l/>		TJS_END_NATIVE_PROP_DECL(square)<r/>
+<l/><r/>
+<l/>	TJS_END_NATIVE_MEMBERS<r/>
+<l/>}<r/>
+</example>
+<r/>
+<dl>
+
+<dt>Line 1</dt>
+<dd>
+　Constructor for NC_Test. In the constructor of the parent class, tTJSNativeClass, specify the class name used in TJS2.
+</dd>
+
+
+
+<dt>Line 3</dt>
+<dd>
+　TJS_BEGIN_NATIVE_MEMBERS macro. Specify the class name used in TJS2 in the argument.<r/>
+　In the place between this macro and the TJS_END_NATIVE_MEMBERS macro, describe the methods and properties that should be members of the class.
+</dd>
+
+
+
+<dt>Line 4</dt>
+<dd>
+　Declares an empty finalize method. Processing equivalent to finalize can also be implemented by overriding tTJSNativeInstance::Invalidate, so an empty method is usually sufficient.
+
+</dd>
+
+
+
+<dt>Lines 7 through 16</dt>
+<dd>
+　Declares a (TJS) constructor. When writing a class in TJS, it is equivalent to declaring a method with the same name as the class in the class.<r/>
+<r/>
+　The first argument of the TJS_BEGIN_NATIVE_CONSTRUCTOR_DECL macro is the variable name assigned to the native instance, and the second argument is the type name of the variable. Within this block in this example, the variables NI_Test * _this are available and you can access the native instance.<r/>
+　The third argument of the macro specifies the class name used in TJS. The same applies to the argument of the TJS_END_NATIVE_CONSTRUCTOR_DECL macro.<r/>
+　Here too, since the process equivalent to the constructor can be implemented by overriding tTJSNativeInstance::Construct, S_OK is returned without doing anything here.
+
+</dd>
+
+
+
+<dt>Lines 18 through 27</dt>
+<dd>
+　Declares the print method. The method name must be the same in both the TJS_BEGIN_NATIVE_METHOD_DECL and TJS_END_NATIVE_METHOD_DECL macros.<r/>
+　The variables available in this macro are tjs_int numparams and tTJSVariant ** param, which indicate the number and arguments of the passed arguments, respectively. They are not used in this method.<r/>
+　Lines 20 to 21 are macros for extracting native instances from objects. In this example, it means to retrieve a native instance to a variable of type NI_Test * called _this. From now on, you can access the native instance with the variable _this. Line 23 calls the native instance's Print method.
+</dd>
+
+
+
+<dt>Lines 29 through 40</dt>
+<dd>
+　Declares the add method. Here we use numparams and param.
+</dd>
+
+
+
+
+<dt>Lines 42 through 62</dt>
+<dd>
+　Declares the value property. In the TJS_BEGIN_NATIVE_PROP_DECL and TJS_END_NATIVE_PROP_DECL macros, specify the property names as in the method declaration.<r/>
+<r/>
+　You can write getters between the TJS_BEGIN_NATIVE_PROP_GETTER and TJS_END_NATIVE_PROP_GETTER macros. In the getter, describe to set the value to * result which is tTJSVariant type.<r/>
+　Similarly, you can write a setter in the area between the TJS_BEGIN_NATIVE_PROP_SETTER and TJS_END_NATIVE_PROP_SETTER macros. In the setter, the value that should be set in * param which is tTJSVariant type is stored, and processing is performed using that value.
+</dd>
+
+
+
+<dt>Lines 64 through 79</dt>
+<dd>
+　Here we declare a read-only property. You can create read-only properties by writing TJS_DENY_NATIVE_PROP_SETTER instead of setters.
+</dd>
+</dl>
+<r/>
+
+<r/>
+<r/>
+　Registering a native class is the same as registering a native function. The following is an example of test code.<r/>
+<r/>
+<example><lc/>
+<l/>		iTJSDispatch2 * global = tjsengine->GetGlobalNoAddRef();<r/>
+<l/>			// Get global object<r/>
+<l/><r/>
+<l/>		iTJSDispatch2 *cls = new NC_Test(); // Create NC_Test object<r/>
+<l/>		tTJSVariant cls_var(cls); // Set object to tTJSVariant type cls_var<r/>
+<l/>		cls->Release(); // Release cls<r/>
+<l/><r/>
+<l/>		TJS_THROW_IF_ERROR(<r/>
+<l/>			global->PropSet(TJS_MEMBERENSURE, TJS_W("Test"), NULL, &amp;cls_var, NULL));<r/>
+<l/>				// Register<r/>
+<l/><r/>
+<l/>		tjsengine->ExecScript(TJS_W(<r/>
+<l/>			"var test = new Test();\n"<r/>
+<l/>			"test.value = 5;\n"<r/>
+<l/>			"var test2 = new Test(test.square);\n"<r/>
+<l/>			"test2.add(3);\n"<r/>
+<l/>			"test2.print();\n\0"),<r/>
+<l/>				NULL, NULL, NULL); // Run script<r/>
+</example>
+<r/>
+</para>
+
+</doc>

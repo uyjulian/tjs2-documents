@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doc>
+<title>tTJS</title>
+
+<para>
+<ptitle>What is tTJS</ptitle>
+　TJS2 script engine class. You can operate TJS2 through objects of this class.<r/>
+</para>
+
+<para>
+<ptitle>constructor</ptitle>
+　The tTJS constructor has no arguments.<r/>
+　tTJS objects cannot be created as automatic variables. It must be created using the new operator.<r/>
+　The reference counter immediately after creation is 1. This means that if you just call the Release method, the tTJS object will be released.<r/>
+</para>
+
+<para>
+<ptitle>Destructor</ptitle>
+　The tTJS destructor is in protection and cannot be accessed.<r/>
+　To release a tTJS object, use the Release method.<r/>
+　It is recommended to call the Shutdown method before releasing the tTJS object.<r/>
+</para>
+
+
+<para>
+<ptitle>AddRef</ptitle>
+void tTJS::AddRef()<r/>
+<r/>
+　Increments the reference counter of the TJS2 script engine.
+</para>
+
+<para>
+<ptitle>Release</ptitle>
+void tTJS::Release()<r/>
+<r/>
+　Decrements the reference counter of the TJS2 script engine.<r/>
+　When the reference counter reaches zero, the tTJS object is released.
+</para>
+
+<para>
+<ptitle>Shutdown</ptitle>
+void tTJS::Shutdown()<r/>
+<r/>
+　Shut down the script engine.<r/>
+<r/>
+　When releasing the TJS2 script engine, it is recommended that this method be called before the Release method.<r/>
+</para>
+
+
+<para>
+<ptitle>GetGlobal</ptitle>
+iTJSDispatch2 * tTJS::GetGlobal()<r/>
+<r/>
+　Get <kw>global object</kw>. An object of type <link href="interface"/> is returned.<r/>
+　When this method returns a global object, it increments its reference counter.<r/>
+</para>
+
+
+
+
+<para>
+<ptitle>GetGlobalNoAddRef</ptitle>
+iTJSDispatch2 * tTJS::GetGlobalNoAddRef()<r/>
+<r/>
+　Get a global object. Unlike GetGlobal, it does not increment the reference counter of the global object.<r/>
+</para>
+
+
+
+
+<para>
+<ptitle>SetConsoleOutput</ptitle>
+void tTJS::SetConsoleOutput(iTJSConsoleOutput *console);<r/>
+<r/>
+　Specify the output destination of <kw>console</kw>.<r/>
+　The console is where error messages from TJS2 are output.<r/>
+<r/>
+It has the following arguments:<r/>
+<r/>
+<dl>
+
+<dt>console</dt>
+<dd>
+　Specifies an object of type <kw>iTJSConsoleOutput</kw> that defines the output destination for the console.<r/>
+　iTJSConsoleOutput type is a basic abstract class defined in tjs.h and has the following methods.<r/>
+<r/>
+<dl>
+<dt>void iTJSConsoleOutput::<kw>ExceptionPrint</kw>(const tjs_char *msg)</dt>
+<dd>
+　This method outputs information about exceptions. msg represents the message.
+</dd>
+
+<dt>void iTJSConsoleOutput::<kw>Print</kw>(const tjs_char *msg)</dt>
+<dd>
+　A method for outputting other information. msg represents the message.
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</para>
+
+
+<para>
+<ptitle>GetConsoleOutput</ptitle>
+tTJSConsoleOutput * tTJS::GetConsoleOutput() const<r/>
+<r/>
+　Gets the output destination of the console.<r/>
+</para>
+
+
+<para>
+<ptitle>OutputToConsole</ptitle>
+void tTJS::OutputToConsole(const tjs_char *msg) const<r/>
+<r/>
+　Prints a string to the console. msg is the message to be output.<r/>
+</para>
+
+
+
+<para>
+<ptitle>OutpuExceptionToConsole</ptitle>
+void tTJS::OutpuExceptionToConsole(const tjs_char *msg) const<r/>
+<r/>
+　Prints the exception string to the console. msg is the message to be output.<r/>
+</para>
+
+
+
+
+<para>
+<ptitle>OutputToConsoleWithCentering</ptitle>
+void tTJS::OutputToConsoleWithCentering(const tjs_char *msg, tjs_uint width) const<r/>
+<r/>
+　Centers the string on the console and outputs it. msg is the message to be output and width is the width.<r/>
+　If the number of characters of the message to be output is smaller than the width, it is centered at the specified width and output
+ (However, the width of all characters is assumed to be the same, so if full-width characters are mixed, the display will be broken.)
+</para>
+
+
+
+
+
+
+<para>
+<ptitle>OutputToConsoleSeparator</ptitle>
+void tTJS::OutputToConsoleSeparator(const tjs_char *text, tjs_uint count) const<r/>
+<r/>
+　Output count delimiters indicated by text to the console.
+</para>
+
+
+
+
+
+<para>
+<ptitle>Dump</ptitle>
+void tTJS::Dump(tjs_uint width = 80) const<r/>
+<r/>
+　Outputs the status of TJS2 to the console.<r/>
+　Displays the disassembly result of the virtual machine code in each script block.<r/>
+　For width, specify the width to output.
+</para>
+
+
+
+<para>
+<ptitle>ExecScript</ptitle>
+void tTJS::ExecScript(<r/>
+	const tjs_char *script,<r/>
+	tTJSVariant *result = NULL,<r/>
+	iTJSDispatch2 *context = NULL,<r/>
+	const tjs_char *name = NULL,<r/>
+	tjs_int lineofs = 0<r/>
+	)<r/>
+<r/>
+void tTJS::ExecScript(<r/>
+	const ttstr &amp;script,<r/>
+	tTJSVariant *result = NULL,<r/>
+	iTJSDispatch2 *context = NULL,<r/>
+	const tjs_char *name = NULL,<r/>
+	tjs_int lineofs = 0<r/>
+	)<r/>
+<r/>
+　Execute the script.<r/>
+<r/>
+　It has the following arguments:<r/>
+<r/>
+<dl>
+
+<dt>const tjs_char *script</dt>
+<dt>const ttstr &amp;script</dt>
+<dd>
+　Specify the script to be executed.
+</dd>
+
+
+
+<dt>tTJSVariant *result</dt>
+<dd>
+　Pointer to a variable of type tTJSVariant to receive the result.<r/>
+　You can specify NULL, but if it is NULL you will not receive the result.
+</dd>
+
+<dt>iTJSDispatch2 *context</dt>
+<dd>
+　Specifies the context in which this script runs.<r/>
+　If you specify NULL, the script runs in the global context.<r/>
+　Normally, specify NULL, but if you want to execute the script in a specific context, specify the object that will be the context.</dd>
+
+
+
+<dt>const tjs_char *name</dt>
+<dd>
+　Specify a name for the script. Usually, specify the file name of the script.<r/>
+　This is used to notify the script where the exception occurred when reporting the exception.
+</dd>
+
+
+<dt>tjs_int lineofs</dt>
+<dd>
+　Specify the starting line (starting at 0) of the script in the script.<r/>
+　Specify the start line of the TJS script when the TJS script is embedded in other documents like the TJS script embedded in the KAG scenario.<r/>
+　This is used to notify the script where the exception occurred when reporting the exception.
+</dd>
+
+
+
+
+</dl>
+
+</para>
+
+
+<para>
+<ptitle>EvalExpression</ptitle>
+void tTJS::EvalExpression(<r/>
+	const tjs_char *expression,<r/>
+	tTJSVariant *result = NULL,<r/>
+	iTJSDispatch2 *context = NULL,<r/>
+	const tjs_char *name = NULL<r/>
+	tjs_int lineofs = 0<r/>
+	)<r/>
+<r/>
+void tTJS::EvalExpression(<r/>
+	const ttstr &amp;expression,<r/>
+	tTJSVariant *result = NULL,<r/>
+	iTJSDispatch2 *context = NULL,<r/>
+	const tjs_char *name = NULL<r/>
+	tjs_int lineofs = 0<r/>
+	)<r/>
+<r/>
+　Evaluate the expression.<r/>
+　See ExecScript for arguments.<r/>
+<r/>
+　For operators that cannot obtain the result of an expression, such as the <kw>if operator</kw>, an exception will be raised if you specify non-NULL for result in an attempt to obtain the result. In this case, NULL must be specified for result.
+</para>
+
+
+
+
+
+<para>
+<ptitle>SetPPValue</ptitle>
+void tTJS::SetPPValue(const tjs_char *name, const tjs_int32 value)<r/>
+<r/>
+　Set the variables for <kw>condition compilation</kw>. name is the name of the variable and value is the value to set.<r/>
+</para>
+
+
+
+
+<para>
+<ptitle>GetPPValue</ptitle>
+tjs_int32 tTJS::GetPPValue(const tjs_char *name)<r/>
+<r/>
+　Gets variables for conditional compilation. name is the name of the variable. Returns 0 if the variable is not found.<r/>
+</para>
+
+
+
+
+
+<para>
+<ptitle>DoGarbageCollection</ptitle>
+tjs_int32 tTJS::DoGarbageCollection()<r/>
+<r/>
+　Performs <kw>garbage collection</kw>. Clears the cache held by TJS2 and completes unprocessed cleanup processing.<r/>
+</para>
+
+</doc>

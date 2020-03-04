@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doc>
+<title>Property</title>
+
+<para>
+<ptitle>Property</ptitle>
+　Properties can be treated like variables, but in fact, like method calls, <kw>setters</kw> (<kw>setter</kw>) and <kw>getters</kw> (<kw>getter</kw>). Setters and getters are sometimes called property handlers.<r/>
+<r/>
+　The syntax is as follows:<r/>
+<bq>
+<kw>property</kw> identifier<r/>
+{<r/>
+	setter(argument)<r/>
+	{<r/>
+		// Here is the content of the setter<r/>
+	}<r/>
+<r/>
+	getter()<r/>
+	{<r/>
+		// Getter content here<r/>
+		return expression; // The value to return as a getter<r/>
+	}<r/>
+}<r/>
+</bq>
+　Setters and getters can be written in reverse order.<r/>
+　This property is registered as a class that describes this property or as a member of the global, but the value is obtained from this identifier through the getter, and the value is set through the setter. These setters and getters can write as much content as methods. The setter writes the variable that receives the value as an argument in ( ) following the setter. Getters return values in <kw>return</kw> statements.<r/>
+<r/>
+　() after getter can be omitted.<r/>
+<r/>
+　If you write both a setter and a getter for one identifier, the property will be both readable and writable. If you write only one side, for example, if you write only a getter, the property will be read-only and writing will result in an error.<r/>
+<example>
+	var value;<r/>
+<r/>
+	property property1 // Declare property 'property1'<r/>
+	{<r/>
+		setter(v)<r/>
+		{<r/>
+			// Setter takes only one argument<r/>
+			value=v; // Process the argument v<r/>
+<r/>
+			inform("value set.");<r/>
+		}<r/>
+<r/>
+		getter<r/>
+		{<r/>
+			// Declares a getter with the same identifier 'property1' as propset<r/>
+			// Getter has no arguments<r/>
+			inform("value get.");<r/>
+			return value; // Return as return value<r/>
+		}<r/>
+	}<r/>
+<r/>
+	property1=5; // Assignment to property1 calls the setter<r/>
+	property1++; // In such an expression, the getter is called and then the setter is called to set the value<r/>
+}<r/>
+</example>
+　Properties can be <kw>overridden</kw> as well as variables, functions and classes.<r/>
+</para>
+
+<para>
+<ptitle>Property object</ptitle>
+　Properties themselves are one object. However, if it is registered with some object, the normal access method simply calls the property handler, and you cannot access the property object itself.<r/>
+　Use the <tt><kw>&amp;</kw></tt> operator to retrieve the property object itself. The retrieved property object can be stored in a local variable.<r/>
+　You can also register property objects using the <tt>&amp;</tt> operator.<r/>
+<example>
+	property prop // Declare property prop<r/>
+	{<r/>
+		(Ommited)<r/>
+	}<r/>
+<r/>
+{<r/>
+	var p = &amp;prop; // Get a property object and put it in a local variable<r/>
+<r/>
+	&amp;object.property1 = p; // register p as property1 of object<r/>
+}<r/>
+</example>
+<r/>
+　The <tt>&amp;</tt> operator allows you to access the property object itself without calling getters or setters. If you do not use the <tt>&amp;</tt> operator, you will have normal access to the property.<r/>
+<r/>
+　The property object retrieved as a local variable can call the property handler using the <tt><kw>*</kw></tt> operator without registering it in the object.<r/>
+<r/>
+<example>
+	property prop // Declare property prop<r/>
+	{<r/>
+		(Omitted)<r/>
+	}<r/>
+<r/>
+{<r/>
+	var p = &amp;prop; // Get a property object and put it in a local variable<r/>
+<r/>
+	*p = 30; // Call setter and set 30<r/>
+	func(*p); // getter get value and pass to func<r/>
+}<r/>
+</example>
+<note>
+If you use a property object for the var variable as described above, make the variable a local variable. This is because once a property object is registered with an object, it will act as a property, not as a property object, via getters and setters. In other words, if you register a property object in a global variable (= global member) or an object member instead of a local variable, it will behave like a normal property. Of course, you can use the &amp; operator to retrieve the property object registered in the member of the global variable or object in this way.
+</note>
+<r/>
+True if the instanceof operator is used with "Property" on the property object (in the example above, &amp;prop instanceof "Property" is true).<r/>
+</para>
+</doc>

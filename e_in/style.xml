@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doc>
+<title>Style</title>
+
+<para>
+<ptitle>Style</ptitle>
+　TJS2 is a language that follows the C language style. Unlike BASIC where one sentence ends with a line feed, the writing style is basically "free style".<r/>
+<r/>
+　However, unlike JavaScript, a sentence cannot end with a line feed.<r/>
+</para>
+
+<para>
+<ptitle>Freestyle</ptitle>
+　Characters generally called "<kw>white space</kw>" such as line breaks, spaces, and tabs can be inserted anywhere if you do not understand the meaning. Also, you must insert it as appropriate so that it does not lose its meaning.<r/>
+<example>
+(1)<r/>
+	function func(a,b) { a++; return a+b; }<r/>
+<r/>
+(2)<r/>
+	function func(a,b) {<r/>
+		a++;<r/>
+		return a+b;<r/>
+	}<r/>
+<r/>
+(3)<r/>
+	function func(a,b)<r/>
+	{<r/>
+		a++;<r/>
+		return a+b;<r/>
+	}<r/>
+<r/>
+(4)<r/>
+	function<r/>
+	func<r/>
+	(<r/>
+	a<r/>
+	,<r/>
+	b<r/>
+	)<r/>
+	{<r/>
+	a<r/>
+	++<r/>
+	;<r/>
+	return<r/>
+	a<r/>
+	+<r/>
+	b<r/>
+	;<r/>
+	}<r/>
+<r/>
+(5)<r/>
+	functionfunc(a,b){a++;returna+b;}<r/>
+<r/>
+(6)<r/>
+	f unction fu nc(a,b)<r/>
+	{<r/>
+		a+ +;<r/>
+<r/>
+	ret urn a+b;<r/>
+	}<r/>
+</example>
+<r/>
+　(1) and (4) have the same meaning. However, (2) or (3) is recommended for readability.<r/>
+　(5) is written without spaces, but if you do this, the characters will be connected and will not be interpreted correctly.<r/>
+　In (6), an error occurs because a space is inserted where it should not be.<r/>
+</para>
+
+<para>
+<ptitle>comment</ptitle>
+　The part between <tt>/*</tt> and <tt>*/</tt> is treated as a comment and is not interpreted. Comments can be nested.<r/>
+　Similarly, the part after <tt>//</tt> on one line is also treated as a comment.<r/>
+<r/>
+<example>
+	function example(a,b,c)<r/>
+	{<r/>
+		return a*b/c; // returns a*b/c<r/>
+	}<r/>
+<r/>
+	/*<r/>
+		You can also write comments like this<r/>
+		/* Nesting of comments is possible */<r/>
+	*/<r/>
+</example>
+</para>
+</doc>
+

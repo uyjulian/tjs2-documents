@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doc>
+<title>Basic type of TJS2</title>
+
+<para>
+<ptitle>Primitive type</ptitle>
+　There are some primitive types defined in tjsTypes.h.<r/>
+<r/>
+<dl>
+
+<dt><kw>tjs_int</kw></dt>
+<dd>Signed integer (minimum 32 bits)</dd>
+
+<dt><kw>tjs_uint</kw></dt>
+<dd>Unsigned integer (minimum 32 bits)</dd>
+
+<dt><kw>tjs_int8</kw></dt>
+<dd>8-bit signed integer</dd>
+
+<dt><kw>tjs_uint8</kw></dt>
+<dd>8-bit unsigned integer</dd>
+
+<dt><kw>tjs_int16</kw></dt>
+<dd>16-bit signed integer</dd>
+
+<dt><kw>tjs_uint16</kw></dt>
+<dd>16bit unsigned integer</dd>
+
+<dt><kw>tjs_int32</kw></dt>
+<dd>32-bit signed integer</dd>
+
+<dt><kw>tjs_uint32</kw></dt>
+<dd>32-bit unsigned integer</dd>
+
+<dt><kw>tjs_int64</kw></dt>
+<dd>64-bit signed integer</dd>
+
+<dt><kw>tjs_uint64</kw></dt>
+<dd>64-bit unsigned integer</dd>
+
+<dt><kw>tjs_char</kw></dt>
+<dd>Wide character (used as a primitive type of TJS2 string type)</dd>
+
+<dt><kw>tjs_nchar</kw></dt>
+<dd>Narrow character</dd>
+
+<dt><kw>tjs_real</kw></dt>
+<dd>Real type (double)</dd>
+
+<dt><kw>tTVInteger</kw></dt>
+<dd>same as tjs_int64</dd>
+
+<dt><kw>tTVReal</kw></dt>
+<dd>same as tjs_real</dd>
+</dl>
+</para>
+
+
+
+
+<para>
+<ptitle>tTJSString</ptitle>
+　The tTJSString type is a string type used in TJS2, and handles tjs_char type zero-terminated character strings. Defined in tjsString.cpp / tjsString.h. It is also available as a short <tt>ttstr</tt> type name.<r/>
+　This type automatically manages memory for strings and has a high affinity with <link href="variant"/>.<r/>
+</para>
+
+<para>
+<ptitle>eTJS</ptitle>
+　The eTJS type is the base type for C ++ exception objects. Defined in tjsError.h. There is a method <kw>GetMessage</kw> that allows you to get the message string thrown with the exception.
+</para>
+
+
+<para>
+<ptitle>TJS_W</ptitle>
+　Macro to convert string literal to tjs_char * type.<r/>
+<r/>
+Example: TJS_W ("string literal")<r/>
+</para>
+
+</doc>

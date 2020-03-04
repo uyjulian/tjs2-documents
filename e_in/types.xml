@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doc>
+<title>Data type</title>
+
+<para>
+<ptitle>Data type</ptitle>
+　TJS2 has no "type" for variables, but it has types internally. Rather than having no type, types are handled automatically / dynamically.<r/>
+　Internal types include <tt>void</tt>, integer, real, string, object, and octet column types.<r/>
+</para>
+
+<para>
+<ptitle>void</ptitle>
+　void means nothing (different from JavaScript). The variable just declared is <tt>void</tt>.<r/>
+　Use the <tt>===</tt> (identification) operator to compare between <tt>void</tt>.<r/>
+　The <tt><kw>typeof</kw></tt> operator returns <tt>"void"</tt> for this.<r/>
+</para>
+
+<para>
+<ptitle>Integer type</ptitle>
+　TJS2 can handle 64-bit integers as integer types. Integers are usually treated as <kw>signed integers</kw>, with the only exception that the <tt><kw>>>></kw></tt> unsigned integer </kw>.<r/>
+　The typeof operator returns <tt>"<kw>Integer</kw>"</tt> for this.<r/>
+</para>
+
+<para>
+<ptitle>Real type</ptitle>
+　TJS2 can handle 64-bit precision real numbers (<kw>double precision real numbers</kw>) as real numbers.<r/>
+　The typeof operator returns <tt>"<kw>Real</kw>"</tt> for this.<r/>
+</para>
+
+<para>
+<ptitle>String type</ptitle>
+　TJS2 can handle zero-terminated strings with no length restrictions. A zero-terminated string means to treat the string assuming that the string ends with <tt>\0</tt>.<r/>
+　The character code handles wide characters (usually <kw>UNICODE</kw>), but whether it is a 16-bit wide character or a 32-bit wide character depends on the environment in which TJS2 was compiled. For example, it is 16bit on Windows, but 32bit on Solaris and Linux.<r/>
+　The typeof operator returns <tt>"<kw>String</kw>"</tt> for this.<r/>
+</para>
+
+<para>
+<ptitle>Object type</ptitle>
+　An object type is a type that holds objects. In addition to objects allocated by the <tt>new</tt> operator, functions, classes, property objects, etc. are all object types.<r/>
+　The <tt>typeof</tt> operator returns <tt>"<kw>Object</kw>"</tt> for this.<r/>
+<r/>
+　Unlike TJS and JavaScript, the object type of TJS2 has a pointer to the object itself and a pointer to the object that is the context in which it is to be used. I am. The operator that changes this context part is the <tt>incontextof</tt> operator.<r/>
+</para>
+
+<para>
+<ptitle>Octet sequence type</ptitle>
+　The octet sequence type handles 8-bit data strings (octet sequence type). This is mainly for handling <kw>binary data</kw>.<r/>
+　The <tt>typeof</tt> operator returns <tt>"<kw>Octet</kw>"</tt> for this.<r/>
+</para>
+
+</doc>

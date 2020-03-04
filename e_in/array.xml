@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doc>
+
+<title>Array class</title>
+
+<para>
+<ptitle>Array class</ptitle>
+　Array class is a class that handles <kw>array</kw>.<r/>
+<r/>
+　You can create an object of this class and treat it like an array with the subscript specified by the indirect member selection operator. The subscript is an integer. 0 represents the first element and 1 represents the next element. Negative integers are treated as if they were specified from the end of the array (-1 is the last element).<r/>
+<example>
+	var a = new Array();<r/>
+	var i;<r/>
+	for(i=0;i&lt;100;i++) a[i]=i;<r/>
+</example>
+<r/>
+　You do not need to declare the size of the array. The size is automatically expanded to the specified subscript size, and the element to which no value is assigned is initialized to void.<r/>
+<r/>
+　There is also a count property, which represents the size of the array. You can also change the size of the array by assigning a value to the count property.<r/>
+</para>
+
+
+<para>
+<ptitle>Array in expression</ptitle>
+　You can use <tt><kw>[ ]</kw></tt> to describe an object of class <tt>Array</tt> on the fly in an expression. <tt>[ ]</tt> is a comma-separated list of expressions that are the initial elements. For example, <r/>
+<tt>
+	var ar = ["a", "b", "c"];
+</tt>
+　<tt>ar</tt> is a reference to an object of class <tt>Array</tt> that contains <tt>"a" "b" "c"</tt> elements is assigned.<r/>
+</para>
+
+<para>
+<ptitle>count</ptitle>
+　The count property indicates the size of the array.<r/>
+</para>
+
+<para>
+<ptitle>load</ptitle>
+　The load method loads an array from a file.<r/>
+<bq>
+Syntax: load (&lt;filename>, &lt;mode = ''>)
+</bq>
+　Read an array from a text file. Each line of text in the file enters each element, and eventually the count property equals the number of lines in the file.<r/>
+　Specify the mode character string when reading a file in mode. This depends on the environment where TJS is running. Specifying an offset following the "o" in decimal will cause the file to be read from that byte position.<r/>
+　Depending on the environment where TJS is running, this method, save method and saveStruct method cannot be used.<r/>
+　The load method returns this Array class object itself.<r/>
+</para>
+
+<para>
+<ptitle>save</ptitle>
+　The save method writes the array to a file.<r/>
+<bq>
+Syntax: save (&lt;filename>, &lt;mode = ''>)<r/>
+</bq>
+　Write an array to a file. Each member is output one line at a time, but references to objects, classes, functions, etc. are blank.<r/>
+　Specify the mode character string when writing a file in mode. This depends on the environment where TJS is running, but in case of Kirikiri, if you specify "c", the file will be easily encrypted (you can read it with the load method as it is). Specify "z" to compress and save the file (cannot be used with "c"; it can also be loaded with the load method). Specifying an offset following the "o" in decimal will result in writing from that byte position in the file. If "b" is specified, it will be saved in binary format (cannot be used with any other mode; it can also be loaded with the load method).<r/>
+　The save method returns this Array class object itself. <r/>
+</para>
+
+<para>
+<ptitle>split</ptitle>
+　The split method splits a string.<r/>
+<bq>
+Syntax: split (&lt;pattern / delimiter set>, &lt;string>, &lt;(reserved)>, &lt;ignore empty elements = false>)
+</bq>
+　Initializes an array and copies the strings into this array separated by patterns or delimiters.<r/>
+　Specify a pattern or a delimiter set as the first argument.<r/>
+　The pattern must be a regular expression object.<r/>
+　The delimiter set specifies the character that serves as the delimiter. You can specify multiple delimiters by specifying a character string.<r/>
+　The third argument is reserved for future versions.<r/>
+　Ignore empty elements or specifies true if an empty element (for example, ,,,,, etc. when using a comma as a delimiter) does not copy the element to the array.<r/>
+　Note the order of the arguments.<r/>
+</para>
+
+<para>
+<ptitle>join</ptitle>
+　The join method joins the arrays into a single string.<r/>
+<bq>
+Syntax: join (&lt;delimiter>, &lt;(reserved)>, &lt;ignore empty elements = false>)
+</bq>
+　Combines each element of the array with a delimiter and returns the combined string.<r/>
+　If an empty element is ignored or is true, void in the element is ignored.<r/>
+<example>
+	var ar = [ "a", "b", void, "d" ];<r/>
+	var s1 = ar.join(","); // "a,b,,d" is assigned to s1<r/>
+	var s2 = ar.join(",",,true); // "a,b,d" is assigned to s2<r/>
+</example>
+</para>
+
+<para>
+<ptitle>reverse</ptitle>
+　The reverse method reverses the order of the elements in the array.<r/>
+<bq>
+Syntax: reverse ()<r/>
+</bq>
+</para>
+
+<para>
+<ptitle>sort</ptitle>
+　The sort method sorts an array.<r/>
+<bq>
+Syntax: sort (&lt;sort order = '+'>, &lt;do stable sorting = false>)
+</bq>
+　Sort order is one of the following strings. Ascending order sorts from small to large, and descending is the reverse. If omitted, '+' is assumed.<r/>
+<bq>
+"+"  : Ascending order (comparison with the usual &lt; operator)<r/>
+"-"  : Descending order<r/>
+"0"  : Ascending numerical order (10,2,1 is sorted to 1,2,10)<r/>
+"9"  : Descending numerical order<r/>
+"a"  : Ascending order by character string ("a", "c", "b" is sorted into "a", "b", "c")<r/>
+"z"  : Descending order by character string<r/>
+</bq>
+　You can specify a function instead of a sort order character. The function has two arguments. Specify a function that returns true if the first argument must come before the second argument. (Note that the return value differs from the function passed to the JavaScript sort method.)<r/>
+<r/>
+　The second argument specifies whether to perform a stable sort. If omitted, false is assumed, and unstable sorting is performed. In a stable sort, the order of array elements with the same order remains the same after sorting. In the case of unstable sorting, there is no guarantee that the order of array elements of the same order will be the same after sorting.<r/>
+<example>
+	var array = [ 0, 1, 2, 10, 12, 14, 4, 6, 2 ];<r/>
+	array.sort();<r/>
+		// ↑ After executing the method, array becomes [0, 1, 2, 2, 4, 6, 10, 12, 14]<r/>
+	array.sort('-');<r/>
+		// ↑ After executing the method, array becomes [14, 12, 10, 6, 4, 2, 2, 1, 0]<r/>
+	array.sort('a');<r/>
+		// ↑ After executing the method, array becomes [0, 1, 10, 12, 14, 2, 2, 4, 6]<r/>
+<r/>
+	var array = [ "hoge", "foo" , "bar", "baz" ];<r/>
+	array.sort();<r/>
+		// ↑ After executing the method, array becomes ["bar", "baz", "foo", "hoge"]<r/>
+<r/>
+	var array = [ "abcd", "abc", "ab", "a" , "b", "c" ];<r/>
+	array.sort(function(a,b) { return a &lt; b; } );<r/>
+		// ↑ Same meaning as '+'<r/>
+<r/>
+	var array = [ "abcd", "abc", "ab", "a" , "b", "c" ];<r/>
+	array.sort(function(a,b) { return a.length &lt; b.length; } );<r/>
+		// ↑ Shortest string length<r/>
+		// (There is no guarantee that "a" "b" "c" of <r/>
+		// the same length is in the order of "a" "b" "c" <r/>
+		// even after sorting.) <r/>
+<r/>
+	var array = [ "abcd", "abc", "ab", "a" , "b", "c" ];<r/>
+	array.sort(function(a,b) { return a.length &lt; b.length; }, true );<r/>
+		// ↑ Shortest string length<r/>
+		// ("a" "b" "c" of the same length is in this order even after sorting)<r/>
+</example>
+</para>
+
+<para>
+<ptitle>saveStruct</ptitle>
+　saveStruct outputs structured data to a file.<r/>
+<bq>
+Syntax: saveStruct (&lt;filename>, &lt;mode = ''>)<r/>
+</bq>
+　The saveStruct method outputs the state of the element to a file in a restorable state.<r/>
+　Each element can contain strings, real numbers, octet sequences, and integers. If there is an object in the element, the contents of that object are also output to the file only if it is an object of Array class or Dictionary class. For other elements, void is output.<r/>
+　For example,<r/>
+<example>
+	([ 1, 2, 3, [4, 5], %[ a : 1, b : 2 ], "String" ]).saveStruct("out.txt");<r/>
+</example>
+　Then
+<bq>
+(const) [<r/>
+	1,<r/>
+	2,<r/>
+	3,<r/>
+	(const) [<r/>
+		4,<r/>
+		5<r/>
+	],<r/>
+	(const) %[<r/>
+		"a" => 1,<r/>
+		"b" => 2<r/>
+	],<r/>
+	"String"<r/>
+]<r/>
+</bq>
+　is output. This allows you to restore the same structure as when you saved it by evaluating the entire file as a single expression.<r/>
+　Here, (const) indicates that the contents of [] and %[] have only constant terms. When the compiler finds this (const), it can read the immediately following dictionary array or array in the expression with high efficiency, assuming that the content contains only constant terms.<r/>
+　The saveStruct method returns this Array object itself.<r/>
+</para>
+
+<para>
+<ptitle>assign</ptitle>
+　The assign method copies the array.<r/>
+<bq>
+Syntax: assign (&lt;copy source array>)<r/>
+</bq>
+　Copies the entire contents of another array specified by the argument.<r/>
+<r/>
+　When a dictionary array (an object of the Dictionary class) is specified as the copy source array, each member of the dictionary array is an array that appears alternately in order of name and value. The order of members is undefined.<r/>
+</para>
+
+<para>
+<ptitle>assignStruct</ptitle>
+　The assignStruct method copies an array with its structure.<r/>
+<bq>
+Syntax: assignStruct (&lt;copy source array>)<r/>
+</bq>
+　Copies the entire contents of another array specified by the argument.<r/>
+　Unlike the assign method, if the member has an array or dictionary array, the contents are recursively copied (in the case of the assign method, only the reference is copied).<r/>
+</para>
+
+<para>
+<ptitle>clear</ptitle>
+　The clear method removes all elements of the array.<r/>
+</para>
+
+<para>
+<ptitle>erase</ptitle>
+　The erase method deletes the element at the specified index.<r/>
+<bq>
+Syntax: erase (&lt;subscript>)<r/>
+</bq>
+　Removes the subscript at the specified position. Elements after the subscript are shifted forward one by one and packed. An exception is raised if the subscript is out of range.<r/>
+</para>
+
+<para>
+<ptitle>remove</ptitle>
+　The remove method removes the element with the same value as the specified value.<r/>
+<bq>
+Syntax: remove (&lt;value>, &lt;remove all = true>)<r/>
+</bq>
+　Identifies and compares each element with the specified value (the behavior of the <kw>===</kw> operator) and removes the matching element.<r/>
+　Deletes all or, if false, deletes only the first element found. Otherwise, delete all found elements.<r/>
+</para>
+
+<para>
+<ptitle>insert</ptitle>
+　The insert method inserts the specified value at the specified position.<r/>
+<bq>
+Syntax: insert (&lt;position>, &lt;value>)<r/>
+</bq>
+　Inserts the element indicated by value into the index position indicated by position. Elements after the position are shifted back one by one.<r/>
+</para>
+
+<para>
+<ptitle>add</ptitle>
+　The add method adds the specified value to the end of the array.<r/>
+<bq>
+Syntax: add (&lt;value>)<r/>
+</bq>
+　Adds the indicated element to the end of the array.<r/>
+　This method returns the position where the value was added.<r/>
+</para>
+
+<para>
+<ptitle>find</ptitle>
+　The find method returns the subscript in which the specified value occurs first.<r/>
+<bq>
+Syntax: find (&lt;value>, &lt;search start position = 0>)<r/>
+</bq>
+　Look at the specified value in order from the subscript at the search start position, and return the first subscript that appears. Returns -1 if the specified value is not found.<r/>
+　The comparison uses an identity comparison (the behavior of the === operator).<r/>
+</para>
+
+<para>
+<ptitle>push</ptitle>
+　The push method adds the specified element to the end of the array.<r/>
+　Unlike the add method, this method returns the size of the added array. If multiple arguments are specified, add all the arguments in order.<r/>
+<bq>
+Syntax: push (&lt;value>, ...)<r/>
+</bq>
+</para>
+
+<para>
+<ptitle>pop</ptitle>
+　The push method takes one element from the end of the array and returns it. The retrieved element is deleted from the array (the size of the array is reduced by one).<r/>
+　This method returns the retrieved element. Returns void if there is no element.<r/>
+<bq>
+Syntax: pop ()<r/>
+</bq>
+</para>
+
+
+<para>
+<ptitle>unshift</ptitle>
+　The unshift method adds elements to the beginning of the array. If multiple elements are specified, multiple elements can be added at the beginning. In this case, for example, if passed in the order of a, b, c, the first element of the array will be in the order of a, b, c.<r/>
+　This method returns the size of the added array.<r/>
+<bq>
+Syntax: unshift (&lt;value>, ...)<r/>
+</bq>
+</para>
+
+<para>
+<ptitle>shift</ptitle>
+　The shift method takes one element from the beginning of the array and returns it. The retrieved element is deleted from the array (the size of the array is reduced by one).<r/>
+　This method returns the retrieved element. Returns void if there is no element.<r/>
+<bq>
+Syntax: shift ()<r/>
+</bq>
+</para>
+
+<para>
+<ptitle>pack</ptitle>
+　The pack method returns the array elements in binary (Octet) according to the character string specified by the argument.<r/>
+　The specified string is called a template.<r/>
+　A template is a list of type designators and their lengths. When * is specified as the length, it indicates all remaining lengths. If the length is omitted, it is treated as 1.<r/>
+<bq>
+Syntax: pack (template string)<r/>
+</bq>
+The following characters can be used in the template string.<r/>
+　a : ASCII string (null characters are completed)<r/>
+　A : ASCII string (space complemented)<r/>
+　b : Binary string (low-order bit to high-order bit)<r/>
+　B : Binary string (high-order bit to low-order bit)<r/>
+　c : Signed 1-byte numeric value (-128 to 127)<r/>
+　C : Unsigned 1-byte numeric value (0 to 255)<r/>
+　d : Double-precision floating-point value<r/>
+　f : Single-precision floating-point value<r/>
+　h : Hexadecimal string (low nybble first)<r/>
+　H : Hexadecimal string (high nybble first)<r/>
+　i : Signed int number (usually 4 bytes)<r/>
+　I : Unsigned int number (usually 4 bytes)<r/>
+　l : Signed long number (usually 4 bytes)<r/>
+　L : Unsigned long number (usually 4 bytes)<r/>
+　n : Unsigned short number (network byte order)<r/>
+　N : Unsigned long number (network byte order)<r/>
+　s : Signed short number (usually 2 bytes)<r/>
+　S : Unsigned short number (usually 2 bytes)<r/>
+　v : Unsigned short value (little endian)<r/>
+　V : Unsigned long value (little endian)<r/>
+　x : Null character<r/>
+　X : One byte backward<r/>
+　@ : Pad nulls to absolute position<r/>
+　m : Base64 decode<r/>
+<example>
+	var oct = array.pack("a4i2");<r/>
+</example>
+　In this example, the character string of the 0th element of array is output with 4 characters as char type, and if less than 4 characters, \0 is added.<r/>
+　Then add the integers from element 1 to element 2 as signed 4-byte integers.<r/>
+　In other words, it is output as a binary string of char * 2 + int * 4.<r/>
+</para>
+
+</doc>

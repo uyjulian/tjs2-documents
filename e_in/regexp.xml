@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doc>
+
+<title>RegExp class</title>
+
+<para>
+<ptitle>RegExp class</ptitle>
+　RegExp class is a class that handles <kw>regular expression pattern</kw>.<r/>
+　The regular expression pattern can be a perl compatible pattern.<r/>
+　Although it is in the JavaScript RegExp class, its compatibility is low.<r/>
+<r/>
+The syntax of the constructor is as follows.
+<bq>
+new RegExp(&lt;Pattern string>, &lt;Flag string=''>);<r/>
+</bq>
+　The pattern string is a regular expression pattern. Note that the \ specified in the pattern is written as \\ when written in a string immediate.<r/>
+　The flag string is a combination of the characters g i.<r/>
+　g is the global search flag. With this flag, the match, exec, and replace methods operate on all parts of the string that match the pattern.<r/>
+　The i flag is not case-sensitive.<r/>
+<r/>
+<example>
+	var re = new RegExp("[a-z]+[0-9]*", "gi");<r/>
+	var re = new RegExp("\\.\\.\\."); // /\.\.\./ ( ... want to match )<r/>
+</example>
+</para>
+
+
+<para>
+<ptitle>Regular expression pattern</ptitle>
+　You can specify a regular expression pattern between the / and /.<r/>
+　See <link href="token"/>.<r/>
+</para>
+
+<para>
+<ptitle>compile</ptitle>
+　The compile method sets a new regular expression pattern in the regular expression object.<r/>
+　The arguments are the same as those specified in the constructor of the RegExp class.<r/>
+</para>
+
+<para>
+<ptitle>test</ptitle>
+　The test method returns whether the given string matches the pattern.<r/>
+<bq>
+Syntax: test(&lt;String>)<r/>
+</bq>
+　Returns true if the pattern matches, false if not.<r/>
+　This method updates the value of each property of this object.<r/>
+</para>
+
+<para>
+<ptitle>exec</ptitle>
+　The exec method performs regular expression pattern matching on the character string specified as an argument, and returns an array containing the matching result.<r/>
+<bq>
+Syntax: exec(&lt;String>)<r/>
+</bq>
+　If it does not match the pattern, the array has zero elements.<r/>
+　If a match occurs, element 0 (the first element) contains the entire matched part, and subsequent elements contain each matched part (the part specified by ( ) in the regular expression pattern).<r/>
+　This method updates the value of each property of this object.<r/>
+</para>
+
+<para>
+<ptitle>match</ptitle>
+　The match method is identical to the exec method, except that it does not update the value of this object's property.<r/>
+<bq>
+Syntax: match(&lt;String>)<r/>
+</bq>
+</para>
+
+
+<para>
+<ptitle>replace</ptitle>
+　The replace method replaces a string and returns the resulting string.<r/>
+<bq>
+Syntax: replace(&lt;Target string>, &lt;Replacement string>)<r/>
+</bq>
+　Performs matching on the target string, replaces the matched part with the replacement string, and returns the replaced string.<r/>
+　If you pass a function instead of a string as the replacement string, the function will be called for the replacement action. The function takes one argument and is passed an array object representing the matched part of the target string (see the exec method for this array). The matched part of the target string is replaced with the string returned by the function.<r/>
+　This method ignores the start property.<r/>
+</para>
+
+<para>
+<ptitle>split</ptitle>
+　The split method splits a string.<r/>
+<bq>
+Syntax: split(&lt;Target string>, &lt;(Reserved)>, &lt;Whether to ignore empty elements=false>)<r/>
+</bq>
+　Returns an array object containing the result of splitting the string.<r/>
+　See also the split method of <link href="array"/>.<r/>
+</para>
+
+<para>
+<ptitle>matches</ptitle>
+　The matches property is a read-only property that represents an array containing each matched part.<r/>
+　If it does not match the pattern, the array has zero elements.<r/>
+　If a match occurs, element 0 (the first element) contains the entire matched part, and subsequent elements contain each matched part (the part specified by ( ) in the regular expression pattern).<r/>
+</para>
+
+<para>
+<ptitle>start</ptitle>
+　Property indicating the search start position of the character string. You can also set a value.<r/>
+</para>
+
+<para>
+<ptitle>index</ptitle>
+　This is a read-only property that indicates the position of the first character of the matched part. Since 0 indicates the beginning, if it is the first character of the string to be matched, it will be 0.<r/>
+</para>
+
+<para>
+<ptitle>lastIndex</ptitle>
+　A read-only property that indicates the position of the character following the last character of the matched part. 0 indicates the beginning.<r/>
+</para>
+
+<para>
+<ptitle>input</ptitle>
+　This is a read-only property that represents the string to be matched.<r/>
+</para>
+
+<para>
+<ptitle>leftContext</ptitle>
+　This is a read-only property that indicates the character string to the left of the matched part in the string to be matched.<r/>
+</para>
+
+<para>
+<ptitle>rightContext</ptitle>
+　This is a read-only property that indicates the character string on the right side of the matched part in the string to be matched.<r/>
+</para>
+
+<para>
+<ptitle>lastMatch</ptitle>
+　Represents the string to be matched. Same as matches[0].
+</para>
+
+<para>
+<ptitle>lastParen</ptitle>
+　Returns the last part of each matched part. Same as matches[matches.count-1].
+</para>
+
+<para>
+<ptitle>RegExp.last</ptitle>
+　The last instance of the RegExp class where the test or exec method was executed.
+<bq>
+Example: if(/pat(\d+)/.test(target)) { return RegExp.last.matches[1]; }<r/>
+</bq>
+
+</para>
+
+
+
+<para>
+<ptitle>Copyright notice</ptitle>
+　The regular expression function is implemented using K.Kosako's liboniguruma. Thanks to the public for releasing useful libraries.<r />
+</para>
+
+</doc>
