@@ -4,6 +4,7 @@ use XML::DOM;
 use Image::Size;
 
 use utf8;
+use open ":utf8";
 
 my $image_dir;
 
@@ -419,7 +420,7 @@ sub process
 	$content =~ s/Shift_JIS/x-sjis-unicode/;
 	my $doc = $parser->parse($content);
 
-	open OH, ">$of";
+	open OH, ">:crlf:utf8", "$of";
 	&rr($doc);
 }
 
@@ -449,7 +450,7 @@ sub writekeywords
 {
 	my $i;
 
-	open OH, ">keywords.html";
+	open OH, ">:crlf:utf8", "keywords.html";
 
 	print OH <<EOF;
 <?xml version="1.0" encoding="UTF-8"?>
@@ -518,7 +519,7 @@ EOF
 
 	@keywords = sort @keywords;
 
-	open OH, ">keywords_p.html";
+	open OH, ">:crlf:utf8", "keywords_p.html";
 
 
 	print OH <<EOF;
