@@ -170,7 +170,7 @@
 書式: <tt>incp %res, %propobj</tt><r/>
 <r/>
 　%reg または %obj.*name または %obj.%name または %propobj をインクリメントします。<r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -182,7 +182,7 @@
 書式: <tt>decp %res, %propobj</tt><r/>
 <r/>
 　%reg または %obj.*name または %obj.%name または %propobj をデクリメントします。<r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -196,7 +196,7 @@
 　%obj.%name と %src の論理和をとり、結果を %obj.%name に格納します。<r/><r/>
 書式: <tt>lorp %res, %propobj, %src</tt><r/><r/>
 　%propobj と %src の論理和をとり、結果を %propobj に格納します。<r/><r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -210,7 +210,7 @@
 　%obj.%name と %src の論理積をとり、結果を %obj.%name に格納します。<r/><r/>
 書式: <tt>landp %res, %propobj, %src</tt><r/><r/>
 　%propobj と %src の論理積をとり、結果を %propobj に格納します。<r/><r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -224,7 +224,7 @@
 　%obj.%name と %src のビットごとの論理和をとり、結果を %obj.%name に格納します。<r/><r/>
 書式: <tt>borp %res, %propobj, %src</tt><r/><r/>
 　%propobj と %src のビットごとの論理和をとり、結果を %propobj に格納します。<r/><r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -238,7 +238,7 @@
 　%obj.%name と %src のビットごとの排他的論理和をとり、結果を %obj.%name に格納します。<r/><r/>
 書式: <tt>bxorp %res, %propobj, %src</tt><r/><r/>
 　%propobj と %src のビットごとの排他的論理和をとり、結果を %propobj に格納します。<r/><r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -252,7 +252,7 @@
 　%obj.%name と %src のビットごとの論理積をとり、結果を %obj.%name に格納します。<r/><r/>
 書式: <tt>bandp %res, %propobj, %src</tt><r/><r/>
 　%propobj と %src のビットごとの論理積をとり、結果を %propobj に格納します。<r/><r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -266,7 +266,7 @@
 　%obj.%name を %src で表された回数分算術右シフトを行った結果を %obj.%name に格納します。<r/><r/>
 書式: <tt>sarp %res, %propobj, %src</tt><r/><r/>
 　%propobj を %src で表された回数分算術右シフトを行った結果を %propobj に格納します。<r/><r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -280,7 +280,7 @@
 　%obj.%name を %src で表された回数分算術左シフトを行った結果を %obj.%name に格納します。<r/><r/>
 書式: <tt>salp %res, %propobj, %src</tt><r/><r/>
 　%propobj を %src で表された回数分算術左シフトを行った結果を %propobj に格納します。<r/><r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -294,7 +294,7 @@
 　%obj.%name を %src で表された回数分ビット右シフトを行った結果を %obj.%name に格納します。<r/><r/>
 書式: <tt>srp %res, %propobj, %src</tt><r/><r/>
 　%propobj を %src で表された回数分ビット右シフトを行った結果を %propobj に格納します。<r/><r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -308,7 +308,7 @@
 　%obj.%name に %src を加算し、結果を %obj.%name に格納します。<r/><r/>
 書式: <tt>addp %res, %propobj, %src</tt><r/><r/>
 　%propobj に %src を加算し、結果を %propobj に格納します。<r/><r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -322,7 +322,7 @@
 　%obj.%name から %src を減算し、結果を %obj.%name に格納します。<r/><r/>
 書式: <tt>subp %res, %propobj, %src</tt><r/><r/>
 　%propobj から %src を減算し、結果を %propobj に格納します。<r/><r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -336,7 +336,7 @@
 　%obj.%name を %src で割ったあまりを %obj.%name に格納します。<r/><r/>
 書式: <tt>modp %res, %propobj, %src</tt><r/><r/>
 　%propobj を %src で割ったあまりを %propobj に格納します。<r/><r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -350,7 +350,7 @@
 　%obj.%name を %src で実数除算し、結果を %obj.%name に格納します。<r/><r/>
 書式: <tt>divp %res, %propobj, %src</tt><r/><r/>
 　%propobj を %src で実数除算し、結果を %propobj に格納します。<r/><r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -364,7 +364,7 @@
 　%obj.%name を %src で整数除算し、結果を %obj.%name に格納します。<r/><r/>
 書式: <tt>divp %res, %propobj, %src</tt><r/><r/>
 　%propobj を %src で整数除算し、結果を %propobj に格納します。<r/><r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -378,7 +378,7 @@
 　%obj.%name に %src を乗算し、結果を %obj.%name に格納します。<r/><r/>
 書式: <tt>mulp %res, %propobj, %src</tt><r/><r/>
 　%propobj に %src を乗算し、結果を %propobj に格納します。<r/><r/>
-　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。<r/>
+　上記の命令の中で、%res をパラメータに持つ物は、res が 0 で無ければ結果を %res にも格納します。
 </dd>
 
 
@@ -559,14 +559,14 @@
 <dd>
 書式: <tt>getp %reg, %propobj</tt><r/>
 <r/>
-　%propobj で表されたプロパティオブジェクトの getter を動作させ、プロパティの値を得て、%reg に代入します。単項 '*' 演算子の動作を行います。<r/>
+　%propobj で表されたプロパティオブジェクトの getter を動作させ、プロパティの値を得て、%reg に代入します。単項 '*' 演算子の動作を行います。
 </dd>
 
 <dt><kw>setp</kw></dt>
 <dd>
 書式: <tt>setp %propobj, %reg</tt><r/>
 <r/>
-　%propobj で表されたプロパティオブジェクトの setter を動作させ、%reg の値を設定します。単項 '*' 演算子の動作を行います。<r/>
+　%propobj で表されたプロパティオブジェクトの setter を動作させ、%reg の値を設定します。単項 '*' 演算子の動作を行います。
 </dd>
 
 <dt><kw>deld</kw>, <kw>deli</kw><r/>(delete member)</dt>
