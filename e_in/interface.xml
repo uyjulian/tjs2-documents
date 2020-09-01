@@ -1261,7 +1261,7 @@ tjs_error iTJSDispatch2::ClassInstanceInfo(<r/>
 
 <r/>
 　Error definitions and related macros are found in tjsErrorDef.h.<r/>
-　Also, a runtime exception (in C ++) may be thrown instead of an error. When it comes to programming, you need to consider run-time exceptions.<r/>
+　Also, a runtime exception (in C++) may be thrown instead of an error. When it comes to programming, you need to consider run-time exceptions.<r/>
 </para>
 
 

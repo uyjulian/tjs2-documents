@@ -66,7 +66,7 @@
 
 <para>
 <ptitle>eTJS</ptitle>
-　The eTJS type is the base type for C ++ exception objects. Defined in tjsError.h. There is a method <kw>GetMessage</kw> that allows you to get the message string thrown with the exception.
+　The eTJS type is the base type for C++ exception objects. Defined in tjsError.h. There is a method <kw>GetMessage</kw> that allows you to get the message string thrown with the exception.
 </para>
 
 

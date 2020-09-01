@@ -379,7 +379,7 @@
 
 <dt>Lines 4 through 8</dt>
 <dd>
-　Constructor for NI_Test. It is recommended that initialization as a C ++ class be done here rather than Construct described later, and that initialization in Construct be minimized.<r/>
+　Constructor for NI_Test. It is recommended that initialization as a C++ class be done here rather than Construct described later, and that initialization in Construct be minimized.<r/>
 　In this example, the value of the data member is set to 0 as the initial value.
 </dd>
 

@@ -166,8 +166,8 @@ True if you use the instanceof operator on a class with "Class" (in the example 
 　In TJS2 there is no clear rule for when an object is deleted, and deletion or invalidation is "always possible". Therefore, objects that have not been invalidated will be invalidated on deletion, and the finalize method may be called at an unexpected time. To avoid this, we recommend that you use the invalidate operator to invalidate objects when you are finished using them.<r/>
 <r/>
 <note>
-　The invalidate operator works much like the C ++ delete operator.<r/>
-　Unlike the C ++ delete operator, the delete operator in TJS2 is for deleting members and local variables. It does not invalidate or delete the object itself, but deleting a member or local variable can cause the object to be invalidated or deleted.<r/>
+　The invalidate operator works much like the C++ delete operator.<r/>
+　Unlike the C++ delete operator, the delete operator in TJS2 is for deleting members and local variables. It does not invalidate or delete the object itself, but deleting a member or local variable can cause the object to be invalidated or deleted.<r/>
 </note>
 </para>
 

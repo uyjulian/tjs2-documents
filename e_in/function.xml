@@ -68,7 +68,7 @@ True if you use the instanceof operator on a function with "Function" (in the ex
 <r/>
 　These arguments are local variables and will not be accessible once execution exits the function.<r/>
 <r/>
-　In TJS2, it is not an error if the number of arguments given in a function call is less or more than the number of arguments in the declaration (except for functions that are not written in TJS2 ( Function written in C ++, etc.) may cause an error.) If more arguments are given than declarations, more will be ignored; otherwise, void will be passed to the missing variables.<r/>
+　In TJS2, it is not an error if the number of arguments given in a function call is less or more than the number of arguments in the declaration (except for functions that are not written in TJS2 ( Function written in C++, etc.) may cause an error.) If more arguments are given than declarations, more will be ignored; otherwise, void will be passed to the missing variables.<r/>
 <example>
 	function test(a, b)<r/>
 	{<r/>
