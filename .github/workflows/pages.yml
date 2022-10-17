@@ -17,9 +17,12 @@ jobs:
         run: |
           echo "/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin" >> $GITHUB_PATH
 
+      - name: Set up Perl environment for Github Actions
+        run: |
+          echo "/home/linuxbrew/.linuxbrew/opt/perl/bin" >> $GITHUB_PATH
+
       - name: Install dependencies
         run: |
-          sudo apt-get install libxml-dom-perl
           brew install perl
           cpan App::cpanminus
           cpanm --local-lib=~/perl5 local::lib
