@@ -23,13 +23,19 @@ jobs:
 
       - name: Build Japanese documentation
         run: |
-          eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib) && cd j_in && bash ../tjs2-documents/j_in/to_html.sh
+          cd j_in && bash ../tjs2-documents/j_in/to_html.sh
 
       - name: Build English documentation
         run: |
-          eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib) && cd e_in && bash ../tjs2-documents/e_in/to_html.sh
+          cd e_in && bash ../tjs2-documents/e_in/to_html.sh
+
+      - name: Move to build
+        run: |
+          mkdir -p build
+          mv j build/j
+          mv e build/e
 
       - name: Deploy to Github Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: .
+          folder: build
