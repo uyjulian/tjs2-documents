@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doc>
+<title>tTJSVariant type</title>
+
+<para>
+<ptitle>About tTJSVariant</ptitle>
+　The tTJSVariant type handles the data of "variables" in TJS2.<r/>
+　The tTJSVariant type has an internal type, and one type can represent void (undefined), object, integer, real number, string, and octet sequence.<r/>
+　In addition, these internal type conversions are automatically handled for operations.<r/>
+</para>
+
+
+
+<para>
+<ptitle>tTJSVariantType</ptitle>
+　Enumeration for internal types of tTJSVariant. It can be obtained with the tTJSVariant::<kw>Type</kw> method.<r/>
+<r/>
+<dl>
+
+<dt><kw>tvtVoid</kw></dt>
+<dd>
+　It is a void type. This type is used when the tTJSVariant type is constructed with a no-argument constructor. is not null.
+</dd>
+
+<dt><kw>tvtObject</kw></dt>
+<dd>
+　Object type. If null, this is the internal type.
+</dd>
+
+<dt><kw>tvtString</kw></dt>
+<dd>
+　String type.
+</dd>
+
+<dt><kw>tvtOctet</kw></dt>
+<dd>
+　Octet sequence type.
+</dd>
+
+<dt><kw>tvtInteger</kw></dt>
+<dd>
+　Integer type. Holds a numeric value of type tTVInteger.
+</dd>
+
+<dt><kw>tvtReal</kw></dt>
+<dd>
+　It is a real type. Holds a numeric value of type tTVReal.
+</dd>
+</dl>
+
+</para>
+
+
+<para>
+<ptitle>Object reference</ptitle>
+　Of the internal types, objects are managed by the reference counter method.<r/>
+　Although the tTJSVariant itself manages the reference counter automatically, after extracting the pointer to the object from each method that obtains <link href="interface"/> from the tTJSVariant and the method that obtains the tTJSVariantClosure type, Note that you are not concerned with managing reference counters.<r/>
+</para>
+
+
+
+<para>
+<ptitle>Object type</ptitle>
+　The <kw>tTJSVariantClosure</kw> type is the type that holds objects inside tTJSVariant. This type has a mechanism to hold two iTJSDispatch2 interfaces, one for the object itself and the other for information about the context in which the object runs.<r/>
+　tTJSVariantClosure type has each method which iTJSDispatch2 interface has. Accessing these methods via tTJSVariantClosure allows you to handle the execution context correctly.<r/>
+<r/>
+　There are two types, tTJSVariant::<kw>AsObjectClosure</kw> and tTJSVariant::<kw>AsObjectClosureNoAddRef</kw>, to extract the tTJSVariantClosure type from the tTJSVariant type. The former increments the object's reference counter, while the latter does not.<r/>
+　Since the tTJSVariantClosure type does not have a mechanism to automatically manage the reference counter, care must be taken in managing the reference counter after extracting the tTJSVariantClosure type from the tTJSVariant type.<r/>
+</para>
+
+
+
+<para>
+<ptitle>String type</ptitle>
+　The strings of TJS2 are managed by the reference counter method. In a simple copy, only the reference counter of the string is increased, and the actual character string is not duplicated.<r/>
+　The tTJSVariantString type is used to manage character strings used by the tTJSVariant and <kw>tTJSString</kw> types. You can use tTJSVariant::<kw>AsString</kw> to retrieve a tTJSVariantString from a tTJSVariant (this method increments the reference counter). However, care must be taken when using tTJSVariantString because the tTJSVariantString type itself does not have a mechanism for automatically managing reference counters.<r/>
+　It is easy to convert to tTJSString type because tTJSString type can manage reference counter (tTJSVariant defines conversion operator with tTJSString).<r/>
+</para>
+
+
+<para>
+<ptitle>Octet row type</ptitle>
+　The octet sequence of TJS2 is managed by the reference counter method like the character string type.<r/>
+　The <kw>tTJSVariantOctet</kw> type is used to manage octet columns. Note that this type, like tTJSVariantString and tTJSVariantClosure, has no mechanism for managing reference counters. To extract a tTJSVariantOctet type from a tTJSVariant type, use tTJSVariant::<kw>AsOctet</kw> (increment the reference counter) and tTJSVariant::<kw>AsOctetNoAddRef</kw> (do not increment the reference counter). I can do it.<r/>
+</para>
+
+
+
+<para>
+<ptitle>conversion</ptitle>
+　tTJSVariant defines various conversion operators and constructors, so it can be treated like a primitive type.<r/>
+　Great care must be taken when converting to and from types managed by reference counters, as described above.<r/>
+</para>
+
+
+<para>
+<ptitle>Calculation</ptitle>
+　Various operators are overloaded, so operations can be performed in the same way as primitive types. Type conversions that are required during the operation are automatically processed.<r/>
+</para>
+
+
+</doc>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doc>
+<title>Date class</title>
+
+<para>
+<ptitle>Date class</ptitle>
+　The function to create a Date object from a string and the function to create a string from an object are not yet implemented, but the others are almost compatible with JavaScript Date.<r/>
+<r/>
+　The syntax of the constructor is as follows.<r/>
+<bq>
+new Date();<r/>
+new Date(&lt;Date string>);<r/>
+new Date(&lt;year>, &lt;month(0 - 11) = 0>, &lt;day = 1>, &lt;hour = 0>, &lt;minute = 0>, &lt;second = 0>);<r/>
+</bq>
+　The first syntax requires no arguments. In this case, keep the current date-time at the time this constructor was executed.<r/>
+　The second syntax specifies a date string. Date string must be in ANSI C asctime () format, defined in RFC1123, defined in RFC1036, or in "year/month/day hour:minute:second" format is needed. Recognition of date strings is performed automatically, and some format variations are supported. However, if the format is too different from the expected format, it may not be recognized.<r/>
+　The third syntax specifies year, month, day, hour, minute, and second.<r/>
+<r/>
+　Implemented methods (JavaScript compatible):<r/>
+setYear/getYear (Set / get 4-digit year based on local time)<r/>
+setMonth/getMonth (Set / get month by local time)<r/>
+setDate/getDate (Set / get day according to local time)<r/>
+setHours/getHours (Set / get time according to local time)<r/>
+setMinutes/getMinutes (Set / get minutes by local time)<r/>
+setSeconds/getSeconds (Set / get seconds according to local time)<r/>
+setTime/getTime (Set / get milliseconds elapsed since 0:00 on January 1, 1970)<r/>
+getDay (Get day of week)<r/>
+parse (Interpreting date strings)<r/>
+</para>
+</doc>
+

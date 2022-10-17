@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<doc>
+<title>Statements and blocks</title>
+
+<para>
+<ptitle>Statements and blocks</ptitle>
+　Statements and blocks are components of the large grammar of TJS2.<r/>
+</para>
+
+<para>
+<ptitle>statement</ptitle>
+　The statement ends with <kw>;</kw> (semicolon). Some expressions have a semicolon directly after the expression, while others have a semicolon after the control syntax such as if.<r/>
+<example>
+	a++;<r/>
+	func1();<r/>
+	return a+b;<r/>
+	etc<r/>
+</example>
+</para>
+
+<para>
+<ptitle>block</ptitle>
+　A block is a group of statements written between <kw>{ }</kw>. Statements are executed from top to bottom.<r/>
+<example>
+	{<r/>
+		a++;<r/>
+		b++;<r/>
+	}<r/>
+<r/>
+	{<r/>
+		var t=func1();<r/>
+		func2(t);<r/>
+		break;<r/>
+	}<r/>
+</example>
+<r/>
+　There is no need for a ; (semicolon) after the block.<r/>
+<r/>
+　Also, every block generates a <kw>scope</kw> for the variable.<r/>
+</para>
+
+<para>
+<ptitle>Execution order</ptitle>
+　In TJS, statements written outside of functions, classes, and properties are executed as the script is executed. Statements in functions, classes, and properties are not executed until called.<r/>
+<example>
+	var a; // Run immediately<r/>
+<r/>
+	function test()<r/>
+	{<r/>
+		a+=10; // Not executed until called<r/>
+	}<r/>
+<r/>
+	a+=30; // Run immediately<r/>
+</example>
+<r/>
+　More precisely, class definitions, function definitions, and property definitions are registered first when the script is executed, and then the other script elements are executed from the beginning. Therefore, functions, classes, and properties can be referenced back in the same script block.<r/>
+<example>
+	test(); // Even functions declared after this position are referenced within the same script block<r/>
+<r/>
+	function test()<r/>
+	{<r/>
+		inform("yah!");<r/>
+	}<r/>
+</example>
+<r/>
+　Calling of functions, etc. between different script blocks is possible if the target function has been read at the time of trying to call the function.<r/>
+　Also, variable declarations are processed in the order in which they are read, so back references are not possible.<r/>
+</para>
+
+<para>
+<ptitle>Global object</ptitle>
+　A global object is a special object that has members, such as variables, functions, and properties, declared at the global position (global position). Accessible with the global keyword.<r/>
+</para>
+
+</doc>

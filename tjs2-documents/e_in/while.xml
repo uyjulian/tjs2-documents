@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doc>
+<title>while statement</title>
+
+<para>
+<ptitle>while statement</ptitle>
+　The <kw>while</kw> statement repeatedly executes a statement or block while a specified condition is true. You can create loops.<r/>
+　The syntax is as follows:<r/>
+<bq>
+while(expression)<r/>
+	Statement or block<r/>
+</bq>
+<r/>
+　The "statement or block" is executed repeatedly as long as the conditional expression is true.<r/>
+<r/>
+　In operation,<r/>
+(1) First, evaluate expression; if false, the statement or block is not executed<r/>
+(2) Execute a statement or block<r/>
+(3) Evaluate expression, and if the result is true, go to (2); otherwise, end the while statement<r/>
+<r/>
+　That is, if expression is false from the beginning, the statement or block is not executed. Also, expression is not always evaluated, and expression is checked for truth each time a statement or block is executed.<r/>
+　In addition, at the time of (3), if the block is a block, the block is exited (variables are deleted).<r/>
+<example>
+	while(func()) ;<r/>
+	/* Continue to evaluate func() without doing anything while func() is true */<r/>
+<r/>
+	while(func()) i++;<r/>
+	/* Keep executing i++ while func() is true */<r/>
+<r/>
+	while(i &lt; 5) // while i is less than 5<r/>
+	{<r/>
+		func(i);<r/>
+		i++;<r/>
+	}<r/>
+</example>
+</para>
+
+<para>
+<ptitle>break</ptitle>
+　Write a break statement when you want to terminate while in the middle.<r/>
+<example>
+	while(true) // Infinite loop unless break is executed<r/>
+	{<r/>
+		if(func()) break; // If func() is true, end while<r/>
+		func2(); // Come here if break is not executed above<r/>
+	}<r/>
+	// Come here when break is executed<r/>
+</example>
+</para>
+
+<para>
+<ptitle>continue</ptitle>
+　Describe the continue statement when you want to start over from evaluating the conditional expression.<r/>
+　When continue is executed, execution moves to (3).<r/>
+<example>
+	var i = 0;<r/>
+	while(i &lt; 5)<r/>
+	{<r/>
+		if(func1()) continue;<r/>
+		// If func1() is true, the condition check of i &lt; 5 is performed.<r/>
+		// Also executed from the beginning of the block<r/>
+		func2();<r/>
+		i++;<r/>
+	}<r/>
+</example>
+</para>
+
+<para>
+<ptitle>do-while</ptitle>
+　The do-while statement is the same as the while statement, but does not check the conditional expression first.<r/>
+　The syntax is as follows:<r/>
+<bq>
+do<r/>
+	Statement or block<r/>
+while(expression);<r/>
+</bq>
+<r/>
+　Since the conditional expression is not checked first, the "statement or block" is executed even if the conditional expression is false at the time of do.<r/>
+　Once the "statement or block" is executed, the conditional expression is checked. If false, the loop is exited; if true, the statement or block is executed again, and so on.<r/>
+</para>
+</doc>
+

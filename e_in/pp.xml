@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<doc>
+<title>preprocessor</title>
+
+<para>
+<ptitle>preprocessor</ptitle>
+　TJS2 can process <kw>conditional compile expression</kw> (corresponding to C #if and #endif). This is processed before the script is actually interpreted, and can be made to cause parts of the script not to be interpreted, or to be interpreted, depending on conditions.<r/>
+　Unlike the C preprocessor directives, the conditional compilation style is freestyle and can be written anywhere. There is no need to write only one directive per line, as in the C directive.<r/>
+</para>
+
+<para>
+<ptitle>@set directive</ptitle>
+　The @set directive evaluates a conditional compilation expression and discards the result. The syntax is as follows:
+<bq>
+	@set(expression)<r/>
+</bq>
+　In "expression", write a conditional compilation expression. The following operators can be used here.<r/>
+<bq>
+	,  =  !=  ==  ||  &amp;&amp;  |  ^  &amp;  &lt;  &gt;  &lt;=  &gt;=  +  -  %  *  /  !  +  -  ( )<r/>
+</bq>
+　See <link href="expr_and_op"/> for the meaning of these operators. However, only data types that can be handled are integers.<r/>
+　In addition, any variables and immediate values can be used. Regarding the naming rules of variable names, the same rules as those of <link href="token"/> are used.<r/>
+　However, variables used in the preprocessor do not interfere with variables used in the TJS2 script (they do not share the same namespace).<r/>
+</para>
+
+<para>
+<ptitle>@if directive, @endif directive</ptitle>
+　The @if directive evaluates a conditional compilation expression, and if the result is 0, does not interpret between them until the next @endif. A non-zero result is interpreted.<r/>
+　The syntax is as follows:<r/>
+<bq>
+	@if(expression)              ...         @endif<r/>
+</bq>
+	In "expression", specify a conditional compilation expression. @if and @endif can be nested.<r/>
+<r/>
+<example>
+	@if(flag==0)  // Variables that have not yet been assigned are considered to be 0<r/>
+		@set(flag=1)<r/>
+		****<r/>
+	@endif<r/>
+	// ↑ Compile the script written in **** only once<r/>
+<r/>
+	@if(version>=0x02040009)<r/>
+		@if(flag)<r/>
+			****<r/>
+		@endif<r/>
+	@endif <r/>
+	// ↑ Compile **** part only when version is 0x02040009 (2.4.9) or more and flag is other than 0<r/>
+</example>
+</para>
+
+<para>
+<ptitle>Predefined variables</ptitle>
+　The <kw>version</kw> variable represents the current TJS2 version.<r/>
+<r/>
+　As a number, the format is 0x0XYYZZZZ in hexadecimal, where X is the major version, YY is the minor version, and ZZZZ is the release number. For example, if it is 0x02040009, the version is 2.4.9.
+</para>
+</doc>

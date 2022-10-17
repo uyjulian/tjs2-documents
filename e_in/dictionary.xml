@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doc>
+
+<title>Dictionary class</title>
+
+<para>
+<ptitle>Dictionary class</ptitle>
+　Dictionary class handles <kw>dictionary array</kw>.<r/>
+<r/>
+　A dictionary array, also called a <kw>associative array</kw>, is an object that holds multiple pairs of names and associated values.<r/>
+　Like the array, you access it with the <kw>[ ]</kw> (indirect reference) operator, but use a string instead of a subscript, which is the name. If the name is valid as an identifier, you can also use the <kw>.</kw> (direct reference) operator.<r/>
+　Also, referencing a non-existent name results in void.<r/>
+　To delete an element, use the delete operator.<r/>
+<example>
+	var d=new Dictionary();<r/>
+	d["sat"] = 1; // same as d.sat = 1<r/>
+	d["sun"] = 2; // same as d.sun = 2<r/>
+	d["mon"] = 3; // same as d.mon = 3<r/>
+	d["name"] ="value!"; // same as d.name = "value!"<r/>
+	d["continue"] = 4; // continue is not an identifier but OK<r/>
+	d.continue = 4; // error because continue is not an identifier<r/>
+<r/>
+	var sat = d["sat"]; // 1 is assigned<r/>
+	var none = d["none"]; // void is assigned<r/>
+<r/>
+	delete d.sat; // delete sat<r/>
+	delete d["continue"]; // delete continue<r/>
+</example>
+<r/>
+</para>
+
+
+<para>
+<ptitle>Dictionary array in expression</ptitle>
+　You can use <tt><kw>%[ ]</kw></tt> to describe an object of the <tt>Dictionary</tt> class on the fly in an expression. Element name => element value, separated by commas, enumerate the expressions that will be the initial element. For example,<r/>
+<tt>
+	var dic = %["a" => 1, "b" => 2, "c" => 3];<r/>
+</tt>
+　<tt>dic</tt> describes the element name and element pair as <tt>"a": 1</tt>, <tt>"b": 2</tt>, <tt>"c": 3</tt> is assigned a reference to an object of the <tt>Dictionary</tt> class.<r/>
+　Internally, <tt>=></tt> is exactly the same as a comma, but for readability, <tt>=></tt> can be used (same as perl is).<r/>
+</para>
+
+<para>
+<ptitle>Accessing the methods of the Dictionary class</ptitle>
+　Dictionary class objects have no members when created.<r/>
+　For example, if you want to use the assign method and write <tt>dict.assign(src)</tt> for the object dict of the Dictionary class, but dict does not have a method called assign Will result in an error.<r/>
+　Therefore, use the <kw>incontextof</kw> operator to cause methods that directly belong to the Dictionary class to execute with the target Dictionary class object as the context.<r/>
+<example>
+	var a = %[];<r/>
+	var b = %[];<r/>
+	(Dictionary.assign incontextof a)(b); // copy b to a<r/>
+	(Dictionary.clear incontextof b)(); // clear the contents of b<r/>
+</example>
+</para>
+
+<para>
+<ptitle>saveStruct</ptitle>
+　saveStruct outputs structured data to a file.<r/>
+　See the same method in <link href="array" />.<r/>
+</para>
+
+<para>
+<ptitle>assign</ptitle>
+　The assign method copies the dictionary array.<r/>
+<bq>
+Syntax: assign (&lt;source dictionary array>, &lt;clear contents = true>)<r/>
+</bq>
+　Copy exactly the contents of another dictionary array specified by the argument.<r/>
+　If "clear contents" is false, the contents of the copy destination dictionary array are overwritten without clearing the contents of the copy destination (the object that executes the method). If a member with the same name as the copy source dictionary array exists in the copy destination dictionary array, the contents of the copy source will overwrite the copy destination.<r/>
+<r/>
+　If an array (an object of the Array class) is specified as the copy source array, it is assumed that the elements that should be members of this dictionary array are arranged in order of name and value, and the contents of the array are stored in this dictionary. Copy to array<r/>
+</para>
+
+<para>
+<ptitle>assignStruct</ptitle>
+　The assignStruct method copies a dictionary array.<r/>
+<bq>
+Syntax: assignStruct (&lt;source dictionary array>)<r/>
+</bq>
+　Copy exactly the contents of another dictionary array specified by the argument.<r/>
+　Unlike the assign method, if the member has an array or dictionary array, the contents are recursively copied (in the case of the assign method, only the reference is copied).<r/>
+</para>
+
+<para>
+<ptitle>clear</ptitle>
+　The clear method clears out all the contents of the dictionary array.<r/>
+</para>
+
+
+</doc>

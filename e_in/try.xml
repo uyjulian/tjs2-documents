@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doc>
+<title>Exception handling</title>
+
+<para>
+<ptitle>Exception handling</ptitle>
+　An <kw>exception</kw> is a so-called "exception" that cannot be considered in normal processing, and is often considered the same as an "error".<r/>
+</para>
+
+<para>
+<ptitle>Where the exception occurs</ptitle>
+　Exceptions can occur anywhere in the program.<r/>
+　Raising an exception is also called "throwing an exception".<r/>
+　For example, suppose the following script caused an error:<r/>
+<r/>
+<example>
+	"3%0"!; // "Division by zero attempted" exception
+</example>
+<r/>
+　In some cases, exceptions may be raised explicitly, but in other cases they may or may not be known.<r/>
+</para>
+
+<para>
+<ptitle>Catching exceptions</ptitle>
+　You can catch exceptions using the <tt><kw>try</kw></tt> (try) keyword and the <tt><kw>catch</kw></tt> (catch) keyword.<r/>
+　For example, to catch the exception that might be raised in the above example, you could write a script like the following:<r/>
+<r/>
+<example>
+	try // Because an exception might be raised<r/>
+	{<r/>
+		func1(); // Here may raise an exception<r/>
+	}<r/>
+	catch // Catching exceptions<r/>
+	{<r/>
+		// This is executed when an exception occurs<r/>
+		inform("Unable to load image."); // Show message<r/>
+	}<r/>
+</example>
+<r/>
+　In this way, if you write a process that may raise an exception in the try block, you can execute the catch block when an exception occurs. You can write error handling this way.<r/>
+<r/>
+　If no exception occurs in the try block, the catch block is not executed.<r/>
+<r/>
+　You can write anything in a try block. As in this example, there may be an exception on the line clearly, but if an exception occurs in the function call or after the function call, write try ... catch You can come back here when the exception occurs.<r/>
+<r/>
+　If an exception occurs, the rest of the block is interrupted and returns to the location of the try.<r/>
+<r/>
+　If the exception occurs again in the catch block, the exception will not be caught at this location. The exception is traced back to the function call, etc., and if the exception has been caught by try elsewhere, it is caught there.<r/>
+<r/>
+　After the exception is thrown, another exception may occur while arriving at the catch block, but the behavior is undefined.<r/>
+<r/>
+　If the exception is not caught anywhere in the script, the exception is passed straight through the script to the application where it is processed.<r/>
+<note>
+Normally, such exceptions interrupt the execution as an error, so it is recommended that you write try ... catch where possible where an error is likely.</note>
+</para>
+
+<para>
+<ptitle>Exception object</ptitle>
+　Various information about the exception is thrown along with an object of class <kw>Exception</kw>. This object is called an exception object. This can be received in catch.<r/>
+　For example, you can write the following script:<r/>
+<example>
+	try<r/>
+	{<r/>
+		loadImages("nothing.jpeg"); // Processing that may raise an exception<r/>
+	}<r/>
+	catch (e) // catch exception in variable e<r/>
+	{<r/>
+		// e.message represents the message string thrown with the exception.<r/>
+		// This may explain why the exception occurred.<r/>
+		inform("Unable to load image.\n"+e.message);<r/>
+	}<r/>
+</example>
+　In this way, you can write the variable to be received in parentheses after the catch, and receive the exception object in that variable.<r/>
+　The scope of this variable begins and ends with the block following the catch. This variable does not need to be declared previously.<r/>
+</para>
+
+<para>
+<ptitle>throw statement</ptitle>
+　You can also throw exceptions. Use the <tt><kw>throw</kw></tt> keyword to throw an exception.<r/>
+　For example, you can write the following script:<r/>
+<example>
+	function pow2(n)<r/>
+	{<r/>
+		// Calculate 2 to the nth power n must be a positive integer<r/>
+		if(n&lt;0) throw new Exception("Negative numbers cannot be specified.");<r/>
+			// ↑ Raise an exception<r/>
+		return 1&lt;&lt;n;<r/>
+	}<r/>
+</example>
+　If a negative number, such as -1, is passed as an argument to this function, an exception is raised. The following statement throws the exception:<r/>
+<r/>
+<bq>
+throw new Exception("Negative numbers cannot be specified.");
+</bq>
+<r/>
+　Regarding <tt>new Exception("Negative number cannot be specified")</tt>, it creates an object of class Exception with a string as an argument. See the Exception class for details. And throw this newly created object with the throw keyword.<r/>
+　Throwing with the throw keyword is not necessarily an Exception class object. You can throw a reference to a function, either a number or a string. However, it is recommended that you throw an object of the Exception class, or a class derived from it. The reason is that you only need to assume that an Exception class object will come in the catch block when you catch it.<r/>
+</para>
+
+<para>
+<ptitle>Throw the exception again</ptitle>
+　It's nice to catch the exception with catch, but a try that might still catch the exception might be declared somewhere, and in such a case you can throw the exception again.<r/>
+　You can write the following script.<r/>
+<example>
+	function tryloadimage()<r/>
+	{<r/>
+		try<r/>
+		{<r/>
+			primaryLayer.loadImages("test1.bmp"); // Read test1.bmp<r/>
+		}<r/>
+		catch(e)<r/>
+		{<r/>
+			inform("Image loading failed.");<r/>
+			throw e; // Print message but throw exception again<r/>
+		}<r/>
+	}<r/>
+<r/>
+	function test()<r/>
+	{<r/>
+		// A function that calls tryloadimage and returns true if the image was loaded successfully, otherwise returns false<r/>
+		try<r/>
+		{<r/>
+			tryloadimage();<r/>
+		}<r/>
+		catch<r/>
+		{<r/>
+			return false;<r/>
+		}<r/>
+		return true;<r/>
+	}<r/>
+</example>
+　If test() is called here and the image reading fails, a message is displayed by the inform method, but an exception is thrown again, so it can be caught by the catch in the test function.<r/>
+</para>
+</doc>

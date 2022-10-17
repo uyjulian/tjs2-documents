@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doc>
+<title>Operations on strings</title>
+
+<para>
+<ptitle>Operations on strings</ptitle>
+　In TJS2, strings are supposed to be objects of the <kw>String</kw> class, but there is no String class, and they are not actually String objects (but Using the typeof operator on a string returns "String").<r/>
+　However, considering strings as objects, several methods and properties are available.<r/>
+</para>
+
+<para>
+<ptitle>length</ptitle>
+　The length property returns the length of the string. Note that it is a property, not a method. However, you cannot assign a value to this property.<r/>
+<r/>
+　TJS treats all characters internally as <kw>UNICODE</kw>, so full-width characters are counted as one character and half-width characters are counted as one character.<r/>
+<example>
+	var str = "abc漢字";<r/>
+	var n = str.length;  // 5 is substituted for n<r/>
+	var n = "abc漢字".length; // This is also assigned 5<r/>
+</example>
+</para>
+
+<para>
+<ptitle>'Number' property</ptitle>
+　By indirectly specifying a numeric value as a property, you can access the character at that character position.<r/>
+　For example, if str is a string or an expression that represents a string, str[0] is a string that represents the first character.<r/>
+　An exception is raised if the number is longer than the string or negative if the last character in the string is empty.<r/>
+<r/>
+　Assignment expressions cannot be generated.<r/>
+<example>
+	var str = "abcdef";<r/>
+	var c = str[0];  // 'a' is assigned to c<r/>
+	var c = str[2];  // 'c' is assigned to c<r/>
+	str[3] = 'A'; // An error occurs because an assignment expression cannot be generated<r/>
+	var c = str[100]; // Error because c value is out of range<r/>
+	var c = str[6]; // Null character '' is assigned<r/>
+</example>
+</para>
+
+<para>
+<ptitle>charAt</ptitle>
+　The charAt method returns the character at the specified position in the string. Works the same as the 'numeric' property, but always returns an empty string when out of range (no exceptions).<r/>
+<bq>
+Syntax: charAt(&lt;Character position>)<r/>
+</bq>
+<example>
+	var str = "abcdef";
+	var c = str.charAt(3); // 'd' is assigned to c
+</example>
+</para>
+
+<para>
+<ptitle>indexOf</ptitle>
+　The indexOf method returns the position of the substring.<r/>
+<bq>
+Syntax: indexOf(&lt;Substring>[,&lt;Search start position>])<r/>
+</bq>
+　Searches the character string for &lt;substring> from &lt;search start position>, and returns the first found position. If 0 is returned, it is the beginning of the string. If it returns -1, it was not found. If &lt;search start position> is omitted, the search starts from the beginning of the character string.<r/>
+<r/>
+<example>
+	var str = "abcdefghijkl";<r/>
+	var n = str.indexOf("fgh"); // 5 is substituted for n<r/>
+	var n = str.indexOf("xyz"); // -1 is assigned to n<r/>
+</example>
+</para>
+
+<para>
+<ptitle>toLowerCase</ptitle>
+　This method has no arguments.<r/>
+　toLowerCase returns a string with the alphabet of the string lowercase.<r/>
+　Double-byte characters are not converted.<r/>
+<r/>
+　These methods do not affect the original string.<r/>
+<example>
+	var lwr="ABCDEF".toLowerCase(); // "abcdef" is assigned to lwr<r/>
+</example>
+<note>
+　In the current version of TJS2, conversion is performed only for characters with character codes less than 0x80.<r/>
+</note>
+</para>
+
+<para>
+<ptitle>toUpperCase</ptitle>
+　This method is the opposite of toLowerCase and returns a string with lowercase letters capitalized.<r/>
+</para>
+
+
+<para>
+<ptitle>substring</ptitle>
+　The substring method returns a substring of a string.<r/>
+<bq>
+Syntax: substring(&lt;Start character position>[,&lt;character count>])
+</bq>
+　Returns a substring of &lt;string> from &lt;start character position> to &lt;number of characters>. It does not affect the original string. If &lt;number of characters> is omitted, all characters after &lt;start character position> are returned.<r/>
+　Please note that the meaning of the argument is different from the same method in JavaScript.<r/>
+<example>
+	var ss="abcdefghijkl".substring(3,3); // "def" is assigned to ss
+</example>
+</para>
+
+<para>
+<ptitle>substr</ptitle>
+　Same as substring.<r/>
+</para>
+
+<para>
+<ptitle>sprintf</ptitle>
+　The sprintf method formats a string.<r/>
+<bq>
+Syntax: sprintf(argument, argument, ....)<r/>
+</bq>
+　Treats the string as a format string and returns a string with text formatting similar to sprintf in C. It does not affect the original string.<r/>
+<example>
+	var formatted = "%04X %c %5d".sprintf(v1, v2, dic[v1]);
+</example>
+</para>
+
+
+<para>
+<ptitle>replace</ptitle>
+　The replace method replaces a string.<r/>
+<bq>
+Syntax: replace(&lt;pattern>, &lt;Replacement string>)
+</bq>
+　Replaces a string according to a regular expression pattern and returns the replaced string. It does not affect the original string.<r/>
+　For the operation, see the <link href="regexp"/> replace method.<r/>
+</para>
+
+<para>
+<ptitle>split</ptitle>
+　The split method splits a string.<r/>
+<bq>
+Syntax: split(&lt;Pattern / delimiter set>, &lt;(Reserved)>, &lt;Whether to ignore empty elements=false>)
+</bq>
+　Returns an array object containing the result of splitting the string.<r/>
+<r/>
+　See also the split method of <link href="array"/> (note the order of the arguments).<r/>
+</para>
+
+<para>
+<ptitle>escape</ptitle>
+　The escape method converts a string to a format that can be represented in a TJS string immediate. All symbols such as \ and " are not interpreted (escaped) for special use with the \ symbol.<r/>
+<bq>
+Syntax: escape()
+</bq>
+　Returns the escaped string. It does not affect the original string.<r/>
+<r/>
+<example>
+	var escaped = str.escape(); // " in str is converted to \", \ is converted to \\, etc.<r/>
+</example>
+</para>
+
+<para>
+<ptitle>trim</ptitle>
+　The trim method returns a string with leading and trailing blanks removed. It does not affect the original string.<r/>
+　Leading and trailing blanks refer to characters whose character code is U+0001–U+0020. In other words, it includes ASCII control characters, but does not include so-called full-width spaces.<r/>
+　If these spaces are found consecutively at the beginning or end, they are all removed.<r/>
+<bq>
+Syntax: trim()
+</bq>
+　Returns a string with leading and trailing blanks removed. It does not affect the original string.<r/>
+<r/>
+<example>
+	var str = "  Hoge ".trim(); // str is "Hoge".<r/>
+</example>
+</para>
+
+<para>
+<ptitle>reverse</ptitle>
+　The reverse method returns a string with the sequence of characters reversed. It does not affect the original string.<r/>
+　In the current version of TJS2, the operation of strings containing surrogate pairs in UTF-16 is not guaranteed.<r/>
+<bq>
+Syntax: reverse()
+</bq>
+　Returns a string with the sequence of characters reversed. It does not affect the original string.<r/>
+<r/>
+<example>
+	var str = "Hoge".reverse(); // str is "egoH".
+</example>
+</para>
+
+<para>
+<ptitle>repeat</ptitle>
+　The repeat method returns a string that repeats the string a specified number of times. It does not affect the original string.<r/>
+<bq>
+Syntax: repeat(count)
+</bq>
+　Returns a character string that repeats this string count times. It does not affect the original string.<r/>
+<r/>
+<example>
+	var str = "Hoge".repeat(3); // str is "HogeHogeHoge".
+</example>
+</para>
+
+
+</doc>
