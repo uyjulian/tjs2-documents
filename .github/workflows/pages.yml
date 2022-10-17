@@ -1,0 +1,44 @@
+name: Deploy Github Pages
+on:
+  push:
+    branches:
+      - uyjworking
+permissions:
+  contents: write
+jobs:
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Homebrew environment for Github Actions
+        run: |
+          echo "/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin" >> $GITHUB_PATH
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install libxml-dom-perl
+          brew install perl
+          cpan App::cpanminus
+          cpanm --local-lib=~/perl5 local::lib
+          eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib) && cpanm XML::DOM
+          eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib) && cpanm Image::Size
+
+      - name: Clone tjs2-documents
+        run: |
+          git clone -b uyjworking https://github.com/uyjulian/tjs2-documents.git
+
+      - name: Build Japanese documentation
+        run: |
+          eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib) && cd j_in && bash ../tjs2-documents/j_in/to_html.sh
+
+      - name: Build English documentation
+        run: |
+          eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib) && cd e_in && bash ../tjs2-documents/e_in/to_html.sh
+
+      - name: Deploy to Github Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: .
