@@ -8,7 +8,7 @@
 　Dictionary class handles <kw>dictionary array</kw>.<r/>
 <r/>
 　A dictionary array, also called a <kw>associative array</kw>, is an object that holds multiple pairs of names and associated values.<r/>
-　Like the array, you access it with the <kw>[ ]</kw> (indirect reference) operator, but use a string instead of a subscript, which is the name. If the name is valid as an identifier, you can also use the <kw>.</Kw> (direct reference) operator.<r/>
+　Like the array, you access it with the <kw>[ ]</kw> (indirect reference) operator, but use a string instead of a subscript, which is the name. If the name is valid as an identifier, you can also use the <kw>.</kw> (direct reference) operator.<r/>
 　Also, referencing a non-existent name results in void.<r/>
 　To delete an element, use the delete operator.<r/>
 <example>

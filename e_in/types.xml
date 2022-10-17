@@ -17,7 +17,7 @@
 
 <para>
 <ptitle>Integer type</ptitle>
-　TJS2 can handle 64-bit integers as integer types. Integers are usually treated as <kw>signed integers</kw>, with the only exception that the <tt><kw>>>></kw></tt> unsigned integer </kw>.<r/>
+　TJS2 can handle 64-bit integers as integer types. Integers are usually treated as <kw>signed integers</kw>, with the only exception that the <tt><kw>&gt;&gt;&gt;</kw></tt> handles <kw>unsigned integers</kw>.<r/>
 　The typeof operator returns <tt>"<kw>Integer</kw>"</tt> for this.<r/>
 </para>
 
